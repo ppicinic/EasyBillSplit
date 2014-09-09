@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
@@ -19,7 +21,11 @@ public class ItemCreateActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_create);
         members = getIntent().getParcelableArrayListExtra("group");
-        TextView textView = (TextView) findViewById(R.id.test_text);
+
+        Spinner itemMemberChoice = (Spinner) findViewById(R.id.item_member_join);
+        ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_item, members);
+        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        itemMemberChoice.setAdapter(aa);
     }
 
 

@@ -38,7 +38,6 @@ public class GroupCreateActivity extends ActionBarActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String result = "phil";
                 String result = name.getText().toString();
                 if(result != null && result.length() > 0) {
                     members.add(new TextPerson(result));

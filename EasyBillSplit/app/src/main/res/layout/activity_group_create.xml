@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="com.philpicinic.easybillsplit.activity.GroupCreateActivity">
 
-    
+
     <EditText
         android:id="@+id/contact_name"
         android:layout_width="fill_parent"

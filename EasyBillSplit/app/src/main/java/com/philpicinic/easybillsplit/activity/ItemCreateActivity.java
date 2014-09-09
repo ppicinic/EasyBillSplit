@@ -56,6 +56,7 @@ public class ItemCreateActivity extends ActionBarActivity {
                     itemAdapter.notifyDataSetChanged();
                     nameText.setText("");
                     priceText.setText("");
+                    priceText.clearFocus();
                 }
             }
         });

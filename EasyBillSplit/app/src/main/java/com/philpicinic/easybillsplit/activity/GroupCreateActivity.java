@@ -1,25 +1,26 @@
-package com.philpicinic.easybillsplit;
+package com.philpicinic.easybillsplit.activity;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.philpicinic.easybillsplit.R;
 
-public class GroupSelectActivity extends ActionBarActivity {
+
+public class GroupCreateActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_select);
-        setTitle(R.string.group_select_activity_name);
+        setContentView(R.layout.activity_group_create);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.group_select, menu);
+        getMenuInflater().inflate(R.menu.group_create, menu);
         return true;
     }
 

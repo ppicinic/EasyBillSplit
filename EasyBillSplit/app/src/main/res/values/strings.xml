@@ -2,6 +2,9 @@
 <resources>
 
     <string name="app_name">Easy Bill Split</string>
+    <string name="group_select_activity_name">Select Group</string>
+    <string name="create_group_name">Add People to the Group</string>
+    <string name="new_group">Create a new group</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 

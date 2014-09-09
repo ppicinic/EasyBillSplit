@@ -1,9 +1,14 @@
-package com.philpicinic.easybillsplit;
+package com.philpicinic.easybillsplit.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+import com.philpicinic.easybillsplit.R;
 
 
 public class GroupSelectActivity extends ActionBarActivity {
@@ -12,6 +17,16 @@ public class GroupSelectActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_select);
+        setTitle(R.string.group_select_activity_name);
+
+        Button btn = (Button)findViewById(R.id.create_group_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

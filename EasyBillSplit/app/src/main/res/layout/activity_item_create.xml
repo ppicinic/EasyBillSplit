@@ -9,28 +9,37 @@
     tools:context="com.philpicinic.easybillsplit.activity.GroupCreateActivity">
 
     <Button
-        android:id="@+id/create_finish_btn"
+        android:id="@+id/item_finish_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Continue"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
     <LinearLayout
-        android:id="@+id/member_input_layout"
+        android:id="@+id/item_input_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_above="@id/create_finish_btn">
+        android:layout_above="@id/item_finish_btn">
         <EditText
-            android:id="@+id/member_name"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/item_name"
             android:layout_weight="1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:inputType="text" />
+        <Spinner
+            android:id="@+id/item_member_join"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></Spinner>
+        <EditText
+            android:id="@+id/price_value"
+            android:layout_weight="1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal" />
 
         <Button
-            android:id="@+id/add_member_btn"
+            android:id="@+id/add_item_btn"
             android:text="Add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,7 +47,7 @@
     </LinearLayout>
 
     <ListView
-        android:layout_above="@id/member_input_layout"
+        android:layout_above="@id/item_input_layout"
         android:layout_alignParentTop="true"
         android:id="@+id/member_list"
         android:layout_width="wrap_content"
@@ -47,3 +56,4 @@
 
 
 </RelativeLayout>
+

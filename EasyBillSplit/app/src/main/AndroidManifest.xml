@@ -20,6 +20,10 @@
             android:name=".activity.GroupCreateActivity"
             android:label="@string/create_group_name" >
         </activity>
+        <activity
+            android:name=".activity.ItemCreateActivity"
+            android:label="@string/title_activity_item_create" >
+        </activity>
     </application>
 
 </manifest>

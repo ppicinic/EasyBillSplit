@@ -25,6 +25,7 @@ public class GroupCreateActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
         members = new ArrayList<String>();
+        members.add("Me");
 
         final EditText name = (EditText) findViewById(R.id.member_name);
 

@@ -11,11 +11,12 @@
 
 
     <EditText
-        android:id="@+id/contact_name"
+        android:id="@+id/member_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="text" />
     <Button
+        android:id="@+id/add_member_btn"
         android:text="Add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />

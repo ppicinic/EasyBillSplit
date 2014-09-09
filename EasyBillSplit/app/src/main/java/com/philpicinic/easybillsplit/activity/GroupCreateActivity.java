@@ -4,16 +4,38 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.philpicinic.easybillsplit.R;
 
+import java.util.ArrayList;
+
 
 public class GroupCreateActivity extends ActionBarActivity {
+
+    private ArrayList<String> members;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+        members = new ArrayList<String>();
+
+        final EditText name = (EditText) findViewById(R.id.member_name);
+
+        Button btn = (Button) findViewById(R.id.add_member_btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String result = name.getText().toString();
+                if(result != null && result.length() > 0) {
+                    members.add(name.getText().toString());
+                    name.setText("");
+                }
+            }
+        });
     }
 
 

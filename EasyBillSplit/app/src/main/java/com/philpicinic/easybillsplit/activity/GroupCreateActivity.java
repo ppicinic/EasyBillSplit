@@ -1,12 +1,15 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
 
@@ -25,17 +28,25 @@ public class GroupCreateActivity extends ActionBarActivity {
 
         final EditText name = (EditText) findViewById(R.id.member_name);
 
+        final ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, members);
+
         Button btn = (Button) findViewById(R.id.add_member_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                String result = "phil";
                 String result = name.getText().toString();
                 if(result != null && result.length() > 0) {
-                    members.add(name.getText().toString());
+                    members.add(result);
                     name.setText("");
+                    aa.notifyDataSetChanged();
                 }
             }
         });
+
+        ListView membersList = (ListView) findViewById(R.id.member_list);
+        membersList.setAdapter(aa);
+
     }
 
 

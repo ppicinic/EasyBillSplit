@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -49,6 +50,18 @@ public class GroupCreateActivity extends ActionBarActivity {
 
         ListView membersList = (ListView) findViewById(R.id.member_list);
         membersList.setAdapter(aa);
+
+        Button continueBtn = (Button) findViewById(R.id.create_finish_btn);
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(members.size() > 0){
+                    Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+                    intent.putParcelableArrayListExtra("group", members);
+                    startActivity(intent);
+                }
+            }
+        });
 
     }
 

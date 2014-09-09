@@ -12,24 +12,26 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.contact.TextPerson;
 
 import java.util.ArrayList;
 
 
 public class GroupCreateActivity extends ActionBarActivity {
 
-    private ArrayList<String> members;
+    private ArrayList<IPerson> members;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
-        members = new ArrayList<String>();
-        members.add("Me");
+        members = new ArrayList<IPerson>();
+        members.add(new TextPerson("Me"));
 
         final EditText name = (EditText) findViewById(R.id.member_name);
 
-        final ArrayAdapter<String> aa = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, members);
+        final ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_list_item_1, members);
 
         Button btn = (Button) findViewById(R.id.add_member_btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +40,7 @@ public class GroupCreateActivity extends ActionBarActivity {
 //                String result = "phil";
                 String result = name.getText().toString();
                 if(result != null && result.length() > 0) {
-                    members.add(result);
+                    members.add(new TextPerson(result));
                     name.setText("");
                     aa.notifyDataSetChanged();
                 }

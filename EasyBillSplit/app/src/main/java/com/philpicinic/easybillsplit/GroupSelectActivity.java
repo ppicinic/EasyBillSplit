@@ -12,6 +12,7 @@ public class GroupSelectActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_select);
+        setTitle(R.string.group_select_activity_name);
     }
 
 

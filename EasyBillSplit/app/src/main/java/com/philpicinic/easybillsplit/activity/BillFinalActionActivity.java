@@ -1,10 +1,13 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.philpicinic.easybillsplit.R;
@@ -24,7 +27,7 @@ public class BillFinalActionActivity extends ActionBarActivity {
 
         items = ManagerService.getInstance().getItems();
 
-        EditText taxText = (EditText) findViewById(R.id.tax_input);
+        final EditText taxText = (EditText) findViewById(R.id.tax_input);
 
         BigDecimal total = new BigDecimal(0);
         for(IItem item : items){
@@ -38,6 +41,15 @@ public class BillFinalActionActivity extends ActionBarActivity {
 
         taxText.setText(tax.toString());
 
+        Button finishBtn = (Button) findViewById(R.id.final_btn);
+        finishBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplication(), BillOutputActivity.class);
+                ManagerService.getInstance().setTaxAmt(new BigDecimal(taxText.getText().toString()));
+                startActivity(intent);
+            }
+        });
     }
 
 

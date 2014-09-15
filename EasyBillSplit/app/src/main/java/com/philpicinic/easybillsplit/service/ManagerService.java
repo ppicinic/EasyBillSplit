@@ -4,6 +4,7 @@ import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -15,10 +16,12 @@ public class ManagerService {
 
     private ArrayList<IPerson> members;
     private ArrayList<IItem> items;
+    private BigDecimal taxAmt;
 
     private ManagerService(){
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
+        taxAmt = new BigDecimal("0");
     }
 
     public static ManagerService getInstance(){
@@ -36,5 +39,9 @@ public class ManagerService {
     public void reset(){
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
+    }
+
+    public void setTaxAmt(BigDecimal tax){
+        taxAmt = tax;
     }
 }

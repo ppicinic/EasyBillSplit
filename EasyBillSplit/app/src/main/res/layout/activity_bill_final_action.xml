@@ -66,6 +66,7 @@
             </LinearLayout>
         </RelativeLayout>
     <Button
+        android:id="@+id/final_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="32sp"

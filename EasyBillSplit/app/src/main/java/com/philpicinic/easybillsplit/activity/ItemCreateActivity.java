@@ -65,8 +65,10 @@ public class ItemCreateActivity extends ActionBarActivity {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), BillFinalActionActivity.class);
-                startActivity(intent);
+                if(items.size() > 0) {
+                    Intent intent = new Intent(getApplicationContext(), BillFinalActionActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

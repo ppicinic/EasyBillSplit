@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
 
@@ -27,7 +28,7 @@ public class GroupCreateActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
-        members = new ArrayList<IPerson>();
+        members = ManagerService.getInstance().getMembers();
         members.add(new TextPerson("Me"));
 
         final EditText name = (EditText) findViewById(R.id.member_name);
@@ -56,7 +57,6 @@ public class GroupCreateActivity extends ActionBarActivity {
             public void onClick(View view) {
                 if(members.size() > 0){
                     Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
-                    intent.putParcelableArrayListExtra("group", members);
                     startActivity(intent);
                 }
             }

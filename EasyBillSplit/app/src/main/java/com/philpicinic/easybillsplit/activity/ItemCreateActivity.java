@@ -10,15 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
-import com.philpicinic.easybillsplit.com.philpicinic.easybillsplit.item.BasicItem;
-import com.philpicinic.easybillsplit.com.philpicinic.easybillsplit.item.IItem;
+import com.philpicinic.easybillsplit.item.BasicItem;
+import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ItemCreateActivity extends ActionBarActivity {
 
@@ -28,8 +27,8 @@ public class ItemCreateActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_create);
-        items = new ArrayList<IItem>();
-        members = getIntent().getParcelableArrayListExtra("group");
+        items = ManagerService.getInstance().getItems();
+        members = ManagerService.getInstance().getMembers();
 
         final Spinner itemMemberChoice = (Spinner) findViewById(R.id.item_member_join);
         ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_item, members);

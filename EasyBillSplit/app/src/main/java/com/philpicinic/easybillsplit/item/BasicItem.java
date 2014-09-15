@@ -1,4 +1,4 @@
-package com.philpicinic.easybillsplit.com.philpicinic.easybillsplit.item;
+package com.philpicinic.easybillsplit.item;
 
 import com.philpicinic.easybillsplit.contact.IPerson;
 
@@ -18,7 +18,7 @@ public class BasicItem implements IItem {
         this.price = new BigDecimal(price);
         this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         this.person = person;
-        this.person.addItem(this);
+//        this.person.addItem(this);
     }
 
     public BigDecimal total(){

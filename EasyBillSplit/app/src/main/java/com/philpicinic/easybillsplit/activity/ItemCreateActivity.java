@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -57,6 +58,15 @@ public class ItemCreateActivity extends ActionBarActivity {
                     priceText.setText("");
                     priceText.clearFocus();
                 }
+            }
+        });
+
+        Button continueBtn = (Button) findViewById(R.id.item_finish_btn);
+        continueBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), BillFinalActionActivity.class);
+                startActivity(intent);
             }
         });
     }

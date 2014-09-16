@@ -24,6 +24,14 @@
             android:name=".activity.ItemCreateActivity"
             android:label="@string/title_activity_item_create" >
         </activity>
+        <activity
+            android:name=".activity.BillFinalActionActivity"
+            android:label="@string/title_activity_bill_final_action" >
+        </activity>
+        <activity
+            android:name=".activity.BillOutputActivity"
+            android:label="@string/title_activity_bill_output" >
+        </activity>
     </application>
 
 </manifest>

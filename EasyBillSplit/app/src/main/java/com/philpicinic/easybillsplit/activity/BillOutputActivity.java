@@ -4,14 +4,32 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.adapters.BillAdapater;
+import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.item.IItem;
+import com.philpicinic.easybillsplit.service.ManagerService;
+
+import java.util.ArrayList;
 
 public class BillOutputActivity extends ActionBarActivity {
 
+    private ArrayList<IItem> items;
+    private ArrayList<IPerson> members;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bill_output);
+
+        items = ManagerService.getInstance().getItems();
+        members = ManagerService.getInstance().getMembers();
+
+        BillAdapater billAdapater = new BillAdapater(this, R.layout.person_bill_amt_layout, members);
+
+        ListView listView = (ListView) findViewById(R.id.person_bill_amt);
+        listView.setAdapter(billAdapater);
     }
 
 

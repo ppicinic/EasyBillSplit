@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.adapters.ItemAdapter;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.contact.IPerson;
@@ -40,7 +42,7 @@ public class ItemCreateActivity extends ActionBarActivity {
         final EditText priceText = (EditText) findViewById(R.id.item_price);
 
         ListView itemList = (ListView) findViewById(R.id.item_list);
-        final ArrayAdapter<IItem> itemAdapter = new ArrayAdapter<IItem>(this, android.R.layout.simple_list_item_1, items);
+        final ItemAdapter itemAdapter = new ItemAdapter(this, R.layout.item_bill_amt_layout, items);
         itemList.setAdapter(itemAdapter);
 
         Button addBtn = (Button) findViewById(R.id.add_item_btn);
@@ -72,7 +74,6 @@ public class ItemCreateActivity extends ActionBarActivity {
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

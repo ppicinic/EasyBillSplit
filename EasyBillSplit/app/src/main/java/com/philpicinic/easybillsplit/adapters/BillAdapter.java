@@ -56,7 +56,7 @@ public class BillAdapter extends ArrayAdapter<IPerson> {
 
         BigDecimal total = ManagerService.getInstance().calculatePerson(data.get(position));
         TextView amtText = (TextView) row.findViewById(R.id.person_total_amt);
-        amtText.setText("$" + total.toString());
+        amtText.setText(total.toString());
         return row;
     }
 }

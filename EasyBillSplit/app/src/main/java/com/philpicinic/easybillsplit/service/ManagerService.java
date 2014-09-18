@@ -109,4 +109,15 @@ public class ManagerService {
         total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return total;
     }
+
+    public BigDecimal getTotalCost(){
+        BigDecimal total = new BigDecimal("0");
+        for(IItem item : items){
+            total = total.add(item.total());
+        }
+        total = total.multiply(calculateTaxRate());
+        total = total.multiply(tipRate);
+        total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return total;
+    }
 }

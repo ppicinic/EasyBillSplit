@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.BillAdapter;
@@ -13,6 +14,7 @@ import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class BillOutputActivity extends ActionBarActivity {
@@ -31,6 +33,10 @@ public class BillOutputActivity extends ActionBarActivity {
 
         ListView listView = (ListView) findViewById(R.id.person_bill_amt);
         listView.setAdapter(billAdapter);
+
+        BigDecimal totalAmount = ManagerService.getInstance().getTotalCost();
+        TextView totalText = (TextView) findViewById(R.id.total_amt);
+        totalText.setText(totalAmount.toString());
     }
 
 

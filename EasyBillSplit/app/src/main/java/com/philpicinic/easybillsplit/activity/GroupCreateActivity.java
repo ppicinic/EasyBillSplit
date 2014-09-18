@@ -29,7 +29,9 @@ public class GroupCreateActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
         members = ManagerService.getInstance().getMembers();
-        members.add(new TextPerson("Me"));
+        if(members.size() == 0) {
+            members.add(new TextPerson("Me", 0));
+        }
 
         final EditText name = (EditText) findViewById(R.id.member_name);
 
@@ -41,7 +43,7 @@ public class GroupCreateActivity extends ActionBarActivity {
             public void onClick(View view) {
                 String result = name.getText().toString();
                 if(result != null && result.length() > 0) {
-                    members.add(new TextPerson(result));
+                    members.add(new TextPerson(result, members.size()));
                     name.setText("");
                     aa.notifyDataSetChanged();
                 }

@@ -32,6 +32,10 @@
             android:name=".activity.BillOutputActivity"
             android:label="@string/title_activity_bill_output" >
         </activity>
+        <activity
+            android:name=".activity.PersonBillActivity"
+            android:label="@string/title_activity_person_bill" >
+        </activity>
     </application>
 
 </manifest>

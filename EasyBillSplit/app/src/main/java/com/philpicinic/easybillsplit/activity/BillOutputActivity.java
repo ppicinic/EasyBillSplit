@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,7 +8,7 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
-import com.philpicinic.easybillsplit.adapters.BillAdapater;
+import com.philpicinic.easybillsplit.adapters.BillAdapter;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
@@ -26,10 +27,10 @@ public class BillOutputActivity extends ActionBarActivity {
         items = ManagerService.getInstance().getItems();
         members = ManagerService.getInstance().getMembers();
 
-        BillAdapater billAdapater = new BillAdapater(this, R.layout.person_bill_amt_layout, members);
+        BillAdapter billAdapter = new BillAdapter(this, R.layout.person_bill_amt_layout, members);
 
         ListView listView = (ListView) findViewById(R.id.person_bill_amt);
-        listView.setAdapter(billAdapater);
+        listView.setAdapter(billAdapter);
     }
 
 
@@ -50,5 +51,11 @@ public class BillOutputActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void checkPersonBill(int id){
+        Intent intent = new Intent(this, PersonBillActivity.class);
+        intent.putExtra("person_id", id);
+        startActivity(intent);
     }
 }

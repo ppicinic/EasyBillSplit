@@ -43,7 +43,7 @@ public class GroupCreateActivity extends ActionBarActivity {
             public void onClick(View view) {
                 String result = name.getText().toString();
                 if(result != null && result.length() > 0) {
-                    members.add(new TextPerson(result, members.size()));
+                    members.add(new TextPerson(result, ManagerService.getInstance().getCurrentId()));
                     name.setText("");
                     aa.notifyDataSetChanged();
                 }

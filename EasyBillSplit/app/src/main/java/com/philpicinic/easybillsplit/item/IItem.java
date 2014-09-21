@@ -11,4 +11,9 @@ public interface IItem {
 
     public BigDecimal total();
     public boolean hasPerson(IPerson person);
+    public String getName();
+    public void setName(String name);
+    public BigDecimal getPrice();
+    public void setPrice(String price);
+    public void setPerson(IPerson person);
 }

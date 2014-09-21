@@ -19,6 +19,7 @@ public class ManagerService {
     private ArrayList<IItem> items;
     private BigDecimal taxAmt;
     private BigDecimal tipRate;
+    private int person_id = -1;
 
     private ManagerService(){
         members = new ArrayList<IPerson>();
@@ -119,5 +120,9 @@ public class ManagerService {
         total = total.multiply(tipRate);
         total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return total;
+    }
+
+    public int getCurrentId(){
+        return ++person_id;
     }
 }

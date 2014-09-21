@@ -29,8 +29,12 @@ public class BasicItem implements IItem {
         return price;
     }
 
+    public boolean hasPerson(IPerson person){
+        return this.person.equals(person);
+    }
+
     public String toString(){
-        return name + " " + price.toString();
+        return name;
     }
 
 }

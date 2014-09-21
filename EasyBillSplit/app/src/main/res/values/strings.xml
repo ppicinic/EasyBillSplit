@@ -10,5 +10,8 @@
     <string name="title_activity_item_create">ItemCreateActivity</string>
     <string name="title_activity_bill_final_action">BillFinalActionActivity</string>
     <string name="title_activity_bill_output">BillOutputActivity</string>
+    <string name="title_activity_person_bill">PersonBillActivity</string>
+    <string name="currency">$</string>
+    <string name="total">Total:</string>
 
 </resources>

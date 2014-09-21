@@ -28,6 +28,7 @@ public class BillFinalActionActivity extends ActionBarActivity {
         items = ManagerService.getInstance().getItems();
 
         final EditText taxText = (EditText) findViewById(R.id.tax_input);
+        final EditText tipText = (EditText) findViewById(R.id.tip_input);
 
         BigDecimal total = new BigDecimal(0);
         for(IItem item : items){
@@ -47,6 +48,7 @@ public class BillFinalActionActivity extends ActionBarActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplication(), BillOutputActivity.class);
                 ManagerService.getInstance().setTaxAmt(new BigDecimal(taxText.getText().toString()));
+                ManagerService.getInstance().setTipRate(new BigDecimal(tipText.getText().toString()));
                 startActivity(intent);
             }
         });

@@ -1,6 +1,5 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -9,7 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
-import com.philpicinic.easybillsplit.adapters.BillAdapter;
+import com.philpicinic.easybillsplit.adapters.PersonBillAdapter;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
@@ -17,33 +16,38 @@ import com.philpicinic.easybillsplit.service.ManagerService;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class BillOutputActivity extends ActionBarActivity {
+public class PersonBillActivity extends ActionBarActivity {
 
-    private ArrayList<IItem> items;
-    private ArrayList<IPerson> members;
+    private ArrayList<IItem> myItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bill_output);
+        setContentView(R.layout.activity_person_bill);
 
-        items = ManagerService.getInstance().getItems();
-        members = ManagerService.getInstance().getMembers();
+        int id = getIntent().getIntExtra("person_id", -1);
+//        int id = savedInstanceState.getInt("person_id");
 
-        BillAdapter billAdapter = new BillAdapter(this, R.layout.person_bill_amt_layout, members);
-
-        ListView listView = (ListView) findViewById(R.id.person_bill_amt);
-        listView.setAdapter(billAdapter);
-
-        BigDecimal totalAmount = ManagerService.getInstance().getTotalCost();
-        TextView totalText = (TextView) findViewById(R.id.total_amt);
-        totalText.setText(totalAmount.toString());
+        IPerson person = ManagerService.getInstance().getPerson(id);
+        if(person != null) {
+            setTitle(person.toString());
+            myItems = ManagerService.getInstance().getPersonItems(person);
+            ListView listView = (ListView) findViewById(R.id.item_bill_list);
+            PersonBillAdapter personBillAdapter =
+                    new PersonBillAdapter(this, R.layout.item_bill_amt_layout, myItems, person);
+            listView.setAdapter(personBillAdapter);
+            BigDecimal total = ManagerService.getInstance().calculatePersonItems(person, myItems);
+            TextView textView = (TextView) findViewById(R.id.total_amt);
+            textView.setText(total.toString());
+        }else{
+            finish();
+        }
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.bill_output, menu);
+        getMenuInflater().inflate(R.menu.person_bill, menu);
         return true;
     }
 
@@ -57,11 +61,5 @@ public class BillOutputActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void checkPersonBill(int id){
-        Intent intent = new Intent(this, PersonBillActivity.class);
-        intent.putExtra("person_id", id);
-        startActivity(intent);
     }
 }

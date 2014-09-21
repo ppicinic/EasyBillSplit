@@ -1,5 +1,7 @@
 package com.philpicinic.easybillsplit.item;
 
+import com.philpicinic.easybillsplit.contact.IPerson;
+
 import java.math.BigDecimal;
 
 /**
@@ -8,4 +10,5 @@ import java.math.BigDecimal;
 public interface IItem {
 
     public BigDecimal total();
+    public boolean hasPerson(IPerson person);
 }

@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +26,13 @@ import java.util.ArrayList;
 
 public class ItemCreateActivity extends ActionBarActivity {
 
+    private static final byte EDIT_ACTION = 0;
+    private static final byte DELETE_ACTION = 1;
+    private static final byte CANCEL_ACTION = 2;
+
     private ArrayList<IPerson> members;
     private ArrayList<IItem> items;
+    private ItemAdapter itemAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +49,8 @@ public class ItemCreateActivity extends ActionBarActivity {
         final EditText priceText = (EditText) findViewById(R.id.item_price);
 
         ListView itemList = (ListView) findViewById(R.id.item_list);
-        final ItemAdapter itemAdapter = new ItemAdapter(this, R.layout.item_bill_amt_layout, items);
+        itemAdapter = new ItemAdapter(this, R.layout.item_bill_amt_layout, items);
+        registerForContextMenu(itemList);
         itemList.setAdapter(itemAdapter);
 
         Button addBtn = (Button) findViewById(R.id.add_item_btn);
@@ -73,6 +81,32 @@ public class ItemCreateActivity extends ActionBarActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, "Edit");
+        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, "Delete");
+        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, "Cancel");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        System.out.println(info.position);
+        System.out.println(item.getItemId());
+        switch (item.getItemId()) {
+            case EDIT_ACTION:
+                // Edit item name and price in pop-up dialog
+                return true;
+            case DELETE_ACTION:
+                items.remove(info.position);
+                itemAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.philpicinic.easybillsplit.adapters;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class ItemAdapter extends ArrayAdapter<IItem> {
 
         TextView priceText = (TextView) row.findViewById(R.id.item_total_amt);
         priceText.setText(item.total().toString());
+        row.setLongClickable(true);
         return row;
     }
 }

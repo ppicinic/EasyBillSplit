@@ -1,6 +1,7 @@
 package com.philpicinic.easybillsplit.activity;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -99,6 +101,7 @@ public class ItemCreateActivity extends ActionBarActivity {
         switch (item.getItemId()) {
             case EDIT_ACTION:
                 // Edit item name and price in pop-up dialog
+                showEditDialog(info.position);
                 return true;
             case DELETE_ACTION:
                 items.remove(info.position);
@@ -126,5 +129,44 @@ public class ItemCreateActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showEditDialog(int position){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.item_edit_layout);
+        final IItem item = ManagerService.getInstance().getItems().get(position);
+        final EditText nameText = (EditText) dialog.findViewById(R.id.item_name);
+        nameText.setText(item.toString());
+        final Spinner memberSpinner = (Spinner) dialog.findViewById(R.id.item_member_join);
+        ArrayList<IPerson> members = ManagerService.getInstance().getMembers();
+        ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_dropdown_item, members);
+        memberSpinner.setAdapter(aa);
+        final EditText priceText = (EditText) dialog.findViewById(R.id.item_price);
+        priceText.setText(item.getPrice().toString());
+        Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println(nameText.getText().toString());
+                System.out.println(((IPerson)memberSpinner.getSelectedItem()).getId());
+                System.out.println(priceText.getText().toString());
+                item.setName(nameText.getText().toString());
+                item.setPerson((IPerson) memberSpinner.getSelectedItem());
+                item.setPrice(priceText.getText().toString());
+                itemAdapter.notifyDataSetChanged();
+                dialog.cancel();
+            }
+        });
+
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 }

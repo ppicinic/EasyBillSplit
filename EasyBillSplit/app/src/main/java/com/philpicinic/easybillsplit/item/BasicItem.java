@@ -18,19 +18,44 @@ public class BasicItem implements IItem {
         this.price = new BigDecimal(price);
         this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         this.person = person;
-//        this.person.addItem(this);
     }
 
     public BigDecimal total(){
         return price;
     }
 
+    @Override
+    public boolean hasPerson(IPerson person) {
+        return this.person.equals(person);
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    @Override
+    public void setPrice(String price) {
+        this.price = new BigDecimal(price);
+        this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+    }
+
     public BigDecimal perTotal(){
         return price;
     }
 
-    public boolean hasPerson(IPerson person){
-        return this.person.equals(person);
+    public void setPerson(IPerson person){
+        this.person = person;
     }
 
     public String toString(){

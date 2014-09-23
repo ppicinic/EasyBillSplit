@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +9,7 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -87,7 +89,7 @@ public class GroupCreateActivity extends ActionBarActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch(item.getItemId()){
             case EDIT_ACTION:
-
+                showEditDialog(info.position);
                 return true;
             case DELETE_ACTION:
                 members.remove(info.position);
@@ -115,5 +117,34 @@ public class GroupCreateActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showEditDialog(int position){
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.person_edit_layout);
+        final IPerson person = members.get(position);
+        final EditText nameText = (EditText) dialog.findViewById(R.id.member_name);
+        nameText.setText(person.getName());
+
+        Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
+        submitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                person.setName(nameText.getText().toString());
+                aa.notifyDataSetChanged();
+                dialog.cancel();
+            }
+        });
+
+        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.cancel();
+            }
+        });
+
+        dialog.show();
     }
 }

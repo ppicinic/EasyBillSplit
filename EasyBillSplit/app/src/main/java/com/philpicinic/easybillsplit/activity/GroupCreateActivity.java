@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,7 +24,12 @@ import java.util.ArrayList;
 
 public class GroupCreateActivity extends ActionBarActivity {
 
+    private static final int EDIT_ACTION = 0;
+    private static final int DELETE_ACTION = 1;
+    private static final int CANCEL_ACTION = 2;
+
     private ArrayList<IPerson> members;
+    private ArrayAdapter<IPerson> aa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,7 @@ public class GroupCreateActivity extends ActionBarActivity {
 
         final EditText name = (EditText) findViewById(R.id.member_name);
 
-        final ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_list_item_1, members);
+        aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_list_item_1, members);
 
         Button btn = (Button) findViewById(R.id.add_member_btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -52,6 +59,7 @@ public class GroupCreateActivity extends ActionBarActivity {
 
         ListView membersList = (ListView) findViewById(R.id.member_list);
         membersList.setAdapter(aa);
+        registerForContextMenu(membersList);
 
         Button continueBtn = (Button) findViewById(R.id.create_finish_btn);
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -66,6 +74,29 @@ public class GroupCreateActivity extends ActionBarActivity {
 
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, "Edit");
+        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, "Delete");
+        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, "Cancel");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item){
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()){
+            case EDIT_ACTION:
+
+                return true;
+            case DELETE_ACTION:
+                members.remove(info.position);
+                aa.notifyDataSetChanged();
+                return true;
+            default:
+                return false;
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

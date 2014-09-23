@@ -96,8 +96,6 @@ public class ItemCreateActivity extends ActionBarActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        System.out.println(info.position);
-        System.out.println(item.getItemId());
         switch (item.getItemId()) {
             case EDIT_ACTION:
                 // Edit item name and price in pop-up dialog

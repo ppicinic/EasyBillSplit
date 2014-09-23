@@ -44,6 +44,10 @@ public class BasicItem implements IItem {
         return price;
     }
 
+    public IPerson getPerson(){
+        return person;
+    }
+
     @Override
     public void setPrice(String price) {
         this.price = new BigDecimal(price);

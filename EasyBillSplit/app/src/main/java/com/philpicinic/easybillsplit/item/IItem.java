@@ -14,6 +14,7 @@ public interface IItem {
     public String getName();
     public void setName(String name);
     public BigDecimal getPrice();
+    public IPerson getPerson();
     public void setPrice(String price);
     public void setPerson(IPerson person);
 }

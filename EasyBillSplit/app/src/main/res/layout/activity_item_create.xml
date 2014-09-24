@@ -19,31 +19,29 @@
         android:id="@+id/item_input_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_above="@id/item_finish_btn">
-        <EditText
-            android:id="@+id/item_name"
+        <RadioGroup
+            android:id="@+id/item_type_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/single_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Single"/>
+            <RadioButton
+                android:id="@+id/shared_radio_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Shared"/>
+        </RadioGroup>
+        <FrameLayout
+            android:id="@+id/item_fragment"
             android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-        <Spinner
-            android:id="@+id/item_member_join"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-        <EditText
-            android:id="@+id/item_price"
-            android:layout_weight="1"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal" />
-
-        <Button
-            android:id="@+id/add_item_btn"
-            android:text="Add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
     </LinearLayout>
 
     <ListView

@@ -2,7 +2,9 @@ package com.philpicinic.easybillsplit.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,11 +16,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.ItemAdapter;
+import com.philpicinic.easybillsplit.fragments.SharedItemFragment;
+import com.philpicinic.easybillsplit.fragments.SingleItemFragment;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.contact.IPerson;
@@ -35,43 +43,30 @@ public class ItemCreateActivity extends ActionBarActivity {
     private ArrayList<IPerson> members;
     private ArrayList<IItem> items;
     private ItemAdapter itemAdapter;
+    private SingleItemFragment singleItemFragment;
+    private SharedItemFragment sharedItemFragment;
+    private int type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_create);
+
+        singleItemFragment = new SingleItemFragment(this);
+        getSupportFragmentManager().beginTransaction().add(R.id.item_fragment, singleItemFragment).commit();
+        type = 0;
+
+        sharedItemFragment = new SharedItemFragment();
+
         items = ManagerService.getInstance().getItems();
-        members = ManagerService.getInstance().getMembers();
 
-        final Spinner itemMemberChoice = (Spinner) findViewById(R.id.item_member_join);
-        ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_item, members);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        itemMemberChoice.setAdapter(aa);
 
-        final EditText nameText = (EditText) findViewById(R.id.item_name);
-        final EditText priceText = (EditText) findViewById(R.id.item_price);
 
         ListView itemList = (ListView) findViewById(R.id.item_list);
         itemAdapter = new ItemAdapter(this, R.layout.item_bill_amt_layout, items);
         registerForContextMenu(itemList);
         itemList.setAdapter(itemAdapter);
 
-        Button addBtn = (Button) findViewById(R.id.add_item_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = nameText.getText().toString();
-                String price = priceText.getText().toString();
-                IPerson person = (IPerson) itemMemberChoice.getSelectedItem();
-                if(name != null && name.length() > 0 && price != null && price.length() > 0) {
-                    IItem item = new BasicItem(name, price, person);
-                    items.add(item);
-                    itemAdapter.notifyDataSetChanged();
-                    nameText.setText("");
-                    priceText.setText("");
-                    priceText.clearFocus();
-                }
-            }
-        });
+
 
         Button continueBtn = (Button) findViewById(R.id.item_finish_btn);
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +78,30 @@ public class ItemCreateActivity extends ActionBarActivity {
                 }
             }
         });
+
+        final RadioButton singleBtn = (RadioButton) findViewById(R.id.single_radio_btn);
+        singleBtn.setChecked(true);
+
+        final RadioButton sharedBtn = (RadioButton) findViewById(R.id.shared_radio_btn);
+        RadioGroup viewSwitcher = (RadioGroup) findViewById(R.id.item_type_btn);
+        viewSwitcher.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(sharedBtn.isChecked()){
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.remove(singleItemFragment);
+                    ft.add(R.id.item_fragment, sharedItemFragment);
+                    ft.commit();
+                }else if(singleBtn.isChecked()){
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    ft.remove(sharedItemFragment);
+                    ft.add(R.id.item_fragment, singleItemFragment);
+                    ft.commit();
+                }
+            }
+        });
+//
+//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.item_fragment);
     }
 
     @Override
@@ -164,5 +183,10 @@ public class ItemCreateActivity extends ActionBarActivity {
         });
 
         dialog.show();
+    }
+
+    public void addItem(IItem item){
+        items.add(item);
+        itemAdapter.notifyDataSetChanged();
     }
 }

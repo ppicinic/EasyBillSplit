@@ -1,6 +1,7 @@
 package com.philpicinic.easybillsplit.fragments;
 
 
+import android.content.ClipData;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -28,15 +29,11 @@ public class SingleItemFragment extends Fragment {
     private ArrayList<IPerson> members;
     private ItemCreateActivity activity;
 
-    public SingleItemFragment(ItemCreateActivity activity){
-        super();
-        this.activity = activity;
-    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.single_item_layout, null);
         members = ManagerService.getInstance().getMembers();
-
+        activity = (ItemCreateActivity) getActivity();
         final Spinner itemMemberChoice = (Spinner) view.findViewById(R.id.item_member_join);
         ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(getActivity(), android.R.layout.simple_spinner_item, members);
         aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

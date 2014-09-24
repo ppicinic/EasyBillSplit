@@ -51,7 +51,7 @@ public class ItemCreateActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_create);
 
-        singleItemFragment = new SingleItemFragment(this);
+        singleItemFragment = new SingleItemFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.item_fragment, singleItemFragment).commit();
         type = 0;
 

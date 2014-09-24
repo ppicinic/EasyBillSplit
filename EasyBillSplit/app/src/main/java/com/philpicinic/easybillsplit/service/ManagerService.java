@@ -19,13 +19,14 @@ public class ManagerService {
     private ArrayList<IItem> items;
     private BigDecimal taxAmt;
     private BigDecimal tipRate;
-    private int person_id = -1;
+    private int person_id;
 
     private ManagerService(){
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
         taxAmt = new BigDecimal("0");
         tipRate = new BigDecimal("1");
+        person_id = -1;
     }
 
     public static ManagerService getInstance(){

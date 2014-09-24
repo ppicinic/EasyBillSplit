@@ -96,8 +96,6 @@ public class ItemCreateActivity extends ActionBarActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        System.out.println(info.position);
-        System.out.println(item.getItemId());
         switch (item.getItemId()) {
             case EDIT_ACTION:
                 // Edit item name and price in pop-up dialog
@@ -142,15 +140,13 @@ public class ItemCreateActivity extends ActionBarActivity {
         ArrayList<IPerson> members = ManagerService.getInstance().getMembers();
         ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_dropdown_item, members);
         memberSpinner.setAdapter(aa);
+        memberSpinner.setSelection(members.indexOf(item.getPerson()));
         final EditText priceText = (EditText) dialog.findViewById(R.id.item_price);
         priceText.setText(item.getPrice().toString());
         Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(nameText.getText().toString());
-                System.out.println(((IPerson)memberSpinner.getSelectedItem()).getId());
-                System.out.println(priceText.getText().toString());
                 item.setName(nameText.getText().toString());
                 item.setPerson((IPerson) memberSpinner.getSelectedItem());
                 item.setPrice(priceText.getText().toString());

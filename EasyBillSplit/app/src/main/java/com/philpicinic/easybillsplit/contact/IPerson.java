@@ -9,4 +9,6 @@ public interface IPerson extends Parcelable {
 
     public int getId();
     public boolean equals(IPerson person);
+    public String getName();
+    public void setName(String name);
 }

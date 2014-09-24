@@ -189,4 +189,12 @@ public class ItemCreateActivity extends ActionBarActivity {
         items.add(item);
         itemAdapter.notifyDataSetChanged();
     }
+
+    public void updateChosenMembers(){
+        sharedItemFragment.updateMembers();
+    }
+
+    public ArrayList<IPerson> getChosenMembers(){
+        return sharedItemFragment.getChosenMembers();
+    }
 }

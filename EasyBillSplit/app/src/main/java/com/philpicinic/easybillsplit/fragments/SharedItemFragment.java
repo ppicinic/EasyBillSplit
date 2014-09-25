@@ -60,7 +60,6 @@ public class SharedItemFragment extends Fragment {
             public void onClick(View view) {
                 String name = nameText.getText().toString();
                 String price = priceText.getText().toString();
-//                IPerson person = (IPerson) itemMemberChoice.getSelectedItem();
                 if(name != null && name.length() > 0 && price != null && price.length() > 0 && membersChosen.size() > 0) {
                     IItem item = new SharedItem(name, price, membersChosen);
                     activity.addItem(item);
@@ -69,11 +68,6 @@ public class SharedItemFragment extends Fragment {
                     updateMembers();
                     priceText.setText("");
                     priceText.clearFocus();
-
-//                    activity.addItem(item);
-//                    nameText.setText("");
-//                    priceText.setText("");
-//                    priceText.clearFocus();
                 }
             }
         });

@@ -17,6 +17,7 @@ import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.dialogs.SharePersonDialogFragment;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
+import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import org.w3c.dom.Text;
@@ -57,16 +58,23 @@ public class SharedItemFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String name = nameText.getText().toString();
-//                String price = priceText.getText().toString();
+                String name = nameText.getText().toString();
+                String price = priceText.getText().toString();
 //                IPerson person = (IPerson) itemMemberChoice.getSelectedItem();
-//                if(name != null && name.length() > 0 && price != null && price.length() > 0) {
-//                    IItem item = new BasicItem(name, price, person);
+                if(name != null && name.length() > 0 && price != null && price.length() > 0 && membersChosen.size() > 0) {
+                    IItem item = new SharedItem(name, price, membersChosen);
+                    activity.addItem(item);
+                    nameText.setText("");
+                    membersChosen = new ArrayList<IPerson>();
+                    updateMembers();
+                    priceText.setText("");
+                    priceText.clearFocus();
+
 //                    activity.addItem(item);
 //                    nameText.setText("");
 //                    priceText.setText("");
 //                    priceText.clearFocus();
-//                }
+                }
             }
         });
 

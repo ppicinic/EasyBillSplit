@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -52,7 +53,18 @@ public class ItemCreateActivity extends ActionBarActivity {
         setContentView(R.layout.activity_item_create);
 
         singleItemFragment = new SingleItemFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.item_fragment, singleItemFragment).commit();
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment f = fm.findFragmentByTag("shared_item");
+        if(f != null) {
+            ft.remove(f);
+        }
+        f = fm.findFragmentByTag("single_item");
+        if(f != null){
+            ft.remove(f);
+        }
+        ft.add(R.id.item_fragment, singleItemFragment, "single_item").commit();
+
         type = 0;
 
         sharedItemFragment = new SharedItemFragment();
@@ -88,20 +100,34 @@ public class ItemCreateActivity extends ActionBarActivity {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 if(sharedBtn.isChecked()){
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.remove(singleItemFragment);
-                    ft.add(R.id.item_fragment, sharedItemFragment);
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment f = fm.findFragmentByTag("shared_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    f = fm.findFragmentByTag("single_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    ft.add(R.id.item_fragment, sharedItemFragment, "shared_item");
                     ft.commit();
                 }else if(singleBtn.isChecked()){
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    ft.remove(sharedItemFragment);
-                    ft.add(R.id.item_fragment, singleItemFragment);
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment f = fm.findFragmentByTag("shared_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    f = fm.findFragmentByTag("single_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    ft.add(R.id.item_fragment, singleItemFragment, "single_item");
                     ft.commit();
                 }
             }
         });
-//
-//        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.item_fragment);
     }
 
     @Override

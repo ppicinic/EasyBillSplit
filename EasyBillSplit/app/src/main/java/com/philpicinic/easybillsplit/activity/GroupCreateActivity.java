@@ -18,12 +18,15 @@ import android.widget.ListView;
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
 
 
 public class GroupCreateActivity extends ActionBarActivity {
+
+    public static final String PERSON_ID = "person_id";
 
     private static final int EDIT_ACTION = 0;
     private static final int DELETE_ACTION = 1;
@@ -120,31 +123,10 @@ public class GroupCreateActivity extends ActionBarActivity {
     }
 
     public void showEditDialog(int position){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.person_edit_layout);
-        final IPerson person = members.get(position);
-        final EditText nameText = (EditText) dialog.findViewById(R.id.member_name);
-        nameText.setText(person.getName());
-
-        Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                person.setName(nameText.getText().toString());
-                aa.notifyDataSetChanged();
-                dialog.cancel();
-            }
-        });
-
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
+        MemberEditDialog dialog = new MemberEditDialog();
+        Bundle args = new Bundle();
+        args.putInt(PERSON_ID, position);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager().beginTransaction(), null);
     }
 }

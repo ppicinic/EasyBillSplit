@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.BasicItem;
-import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;

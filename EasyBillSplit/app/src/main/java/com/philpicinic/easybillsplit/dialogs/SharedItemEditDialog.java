@@ -28,7 +28,7 @@ public class SharedItemEditDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         members = ManagerService.getInstance().getMembers();
-        int t = getArguments().getInt("item_id");
+        int t = getArguments().getInt(ItemCreateActivity.ITEM_ID);
         item = (SharedItem) ManagerService.getInstance().getItems().get(t);
         editedMembers = new ArrayList<IPerson>();
         for(IPerson person : item.getMembers()){

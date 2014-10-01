@@ -36,6 +36,10 @@ import java.util.ArrayList;
 
 public class ItemCreateActivity extends ActionBarActivity {
 
+    public static final String ITEM_ID = "item_id";
+    public static final String SINGLE_ITEM = "item_id";
+    public static final String SHARED_ITEM = "item_id";
+
     private static final byte EDIT_ACTION = 0;
     private static final byte DELETE_ACTION = 1;
     private static final byte CANCEL_ACTION = 2;
@@ -54,15 +58,15 @@ public class ItemCreateActivity extends ActionBarActivity {
         singleItemFragment = new SingleItemFragment();
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        Fragment f = fm.findFragmentByTag("shared_item");
+        Fragment f = fm.findFragmentByTag(SHARED_ITEM);
         if(f != null) {
             ft.remove(f);
         }
-        f = fm.findFragmentByTag("single_item");
+        f = fm.findFragmentByTag(SINGLE_ITEM);
         if(f != null){
             ft.remove(f);
         }
-        ft.add(R.id.item_fragment, singleItemFragment, "single_item").commit();
+        ft.add(R.id.item_fragment, singleItemFragment, SINGLE_ITEM).commit();
 
         type = 0;
 
@@ -101,28 +105,28 @@ public class ItemCreateActivity extends ActionBarActivity {
                 if(sharedBtn.isChecked()){
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    Fragment f = fm.findFragmentByTag("shared_item");
+                    Fragment f = fm.findFragmentByTag(SHARED_ITEM);
                     if(f != null){
                         ft.remove(f);
                     }
-                    f = fm.findFragmentByTag("single_item");
+                    f = fm.findFragmentByTag(SINGLE_ITEM);
                     if(f != null){
                         ft.remove(f);
                     }
-                    ft.add(R.id.item_fragment, sharedItemFragment, "shared_item");
+                    ft.add(R.id.item_fragment, sharedItemFragment, SHARED_ITEM);
                     ft.commit();
                 }else if(singleBtn.isChecked()){
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    Fragment f = fm.findFragmentByTag("shared_item");
+                    Fragment f = fm.findFragmentByTag(SHARED_ITEM);
                     if(f != null){
                         ft.remove(f);
                     }
-                    f = fm.findFragmentByTag("single_item");
+                    f = fm.findFragmentByTag(SINGLE_ITEM);
                     if(f != null){
                         ft.remove(f);
                     }
-                    ft.add(R.id.item_fragment, singleItemFragment, "single_item");
+                    ft.add(R.id.item_fragment, singleItemFragment, SINGLE_ITEM);
                     ft.commit();
                 }
             }
@@ -211,13 +215,13 @@ public class ItemCreateActivity extends ActionBarActivity {
 //            dialog.show();
             ItemEditDialog dialog = new ItemEditDialog();
             Bundle args = new Bundle();
-            args.putInt("item_id", position);
+            args.putInt(ITEM_ID, position);
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager().beginTransaction(), null);
         }else if(items.get(position) instanceof SharedItem){
             SharedItemEditDialog dialog = new SharedItemEditDialog();
             Bundle args = new Bundle();
-            args.putInt("item_id", position);
+            args.putInt(ITEM_ID, position);
             dialog.setArguments(args);
             dialog.show(getSupportFragmentManager().beginTransaction(), null);
         }

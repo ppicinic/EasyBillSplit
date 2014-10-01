@@ -27,7 +27,7 @@ public class ItemEditDialog extends DialogFragment{
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         members = ManagerService.getInstance().getMembers();
-        int t = getArguments().getInt("item_id");
+        int t = getArguments().getInt(ItemCreateActivity.ITEM_ID);
         item = (BasicItem) ManagerService.getInstance().getItems().get(t);
         member = item.getPerson();
 

@@ -49,11 +49,6 @@ public class BasicItem implements IItem {
     }
 
     @Override
-    public BigDecimal personTotal(){
-        return price;
-    }
-
-    @Override
     public void setPrice(String price) {
         this.price = new BigDecimal(price);
         this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);

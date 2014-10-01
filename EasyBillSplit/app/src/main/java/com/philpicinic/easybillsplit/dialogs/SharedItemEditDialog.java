@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.SharedItem;
@@ -59,8 +60,8 @@ public class SharedItemEditDialog extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton("Cancel", null);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String name = nameText.getText().toString().trim();

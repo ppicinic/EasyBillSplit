@@ -24,8 +24,7 @@ public class PersonBillActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_person_bill);
 
-        int id = getIntent().getIntExtra("person_id", -1);
-//        int id = savedInstanceState.getInt("person_id");
+        int id = getIntent().getIntExtra(BillOutputActivity.PERSON_ID, -1);
 
         IPerson person = ManagerService.getInstance().getPerson(id);
         if(person != null) {

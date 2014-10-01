@@ -19,8 +19,11 @@ import java.util.ArrayList;
 
 public class BillOutputActivity extends ActionBarActivity {
 
+    public static final String PERSON_ID = "person_id";
+
     private ArrayList<IItem> items;
     private ArrayList<IPerson> members;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +64,7 @@ public class BillOutputActivity extends ActionBarActivity {
 
     public void checkPersonBill(int id){
         Intent intent = new Intent(this, PersonBillActivity.class);
-        intent.putExtra("person_id", id);
+        intent.putExtra(PERSON_ID, id);
         startActivity(intent);
     }
 }

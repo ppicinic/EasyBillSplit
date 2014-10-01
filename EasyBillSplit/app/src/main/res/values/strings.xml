@@ -24,5 +24,9 @@
     <string name="shared">Shared</string>
     <string name="price">Price</string>
     <string name="item_name">Item name</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="me">Me</string>
+    <string name="none_selected">You have not selected anyone yet.</string>
 
 </resources>

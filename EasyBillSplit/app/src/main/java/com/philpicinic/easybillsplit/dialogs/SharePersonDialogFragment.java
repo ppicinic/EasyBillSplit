@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
+import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.service.ManagerService;
@@ -35,7 +36,7 @@ public class SharePersonDialogFragment extends DialogFragment {
                 }
             }
         });
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 ((ItemCreateActivity) getActivity()).updateChosenMembers();

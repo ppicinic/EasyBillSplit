@@ -37,7 +37,7 @@ public class SharedItemFragment extends Fragment {
         activity = (ItemCreateActivity) getActivity();
 
         memberDropDown = (TextView) view.findViewById(R.id.person_dropdownlist);
-        memberDropDown.setText("You have not selected anyone yet.");
+        memberDropDown.setText(getString(R.string.none_selected));
         memberDropDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +80,7 @@ public class SharedItemFragment extends Fragment {
             sb.delete(sb.length() - 2, sb.length());
             memberDropDown.setText(sb.toString());
         }else{
-            memberDropDown.setText("You have not selected anyone yet.");
+            memberDropDown.setText(getString(R.string.none_selected));
         }
     }
 

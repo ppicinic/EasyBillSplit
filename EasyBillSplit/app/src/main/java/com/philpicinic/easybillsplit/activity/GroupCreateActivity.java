@@ -38,7 +38,7 @@ public class GroupCreateActivity extends ActionBarActivity {
         setContentView(R.layout.activity_group_create);
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
-            members.add(new TextPerson("Me", ManagerService.getInstance().getCurrentId()));
+            members.add(new TextPerson(getString(R.string.me), ManagerService.getInstance().getCurrentId()));
         }
 
         final EditText name = (EditText) findViewById(R.id.member_name);
@@ -78,9 +78,9 @@ public class GroupCreateActivity extends ActionBarActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, "Edit");
-        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, "Delete");
-        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, "Cancel");
+        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, getString(R.string.delete));
+        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, getString(R.string.cancel));
     }
 
     @Override

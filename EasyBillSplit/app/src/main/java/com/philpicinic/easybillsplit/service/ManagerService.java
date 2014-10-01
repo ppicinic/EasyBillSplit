@@ -65,7 +65,7 @@ public class ManagerService {
         BigDecimal completeTotal = new BigDecimal("0");
         for(IItem item : myItems){
             if(item.hasPerson(person)){
-                total = total.add(item.total());
+                total = total.add(item.personTotal());
             }
             completeTotal = completeTotal.add(item.total());
         }
@@ -105,9 +105,9 @@ public class ManagerService {
     }
 
     public BigDecimal calculateItemForPerson(IItem item, IPerson person){
-        BigDecimal total = item.total();
-        total = total.multiply(calculateTaxRate());
-        total = total.multiply(tipRate);
+        BigDecimal total = item.personTotal();
+//        total = total.multiply(calculateTaxRate());
+//        total = total.multiply(tipRate);
         total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return total;
     }

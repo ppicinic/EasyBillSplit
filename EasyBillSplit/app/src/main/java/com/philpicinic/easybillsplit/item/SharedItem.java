@@ -63,6 +63,13 @@ public class SharedItem implements IItem{
     }
 
     @Override
+    public BigDecimal personTotal(){
+        BigDecimal result = this.price.divide(new BigDecimal(members.size()), 2,
+                BigDecimal.ROUND_HALF_EVEN);
+        return result;
+    }
+
+    @Override
     public void setPerson(IPerson person) {
         throw new UnsupportedOperationException();
     }

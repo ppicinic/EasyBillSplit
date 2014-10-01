@@ -2,6 +2,7 @@ package com.philpicinic.easybillsplit.item;
 
 import com.philpicinic.easybillsplit.contact.IPerson;
 
+import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -67,6 +68,14 @@ public class SharedItem implements IItem{
         BigDecimal result = this.price.divide(new BigDecimal(members.size()), 2,
                 BigDecimal.ROUND_HALF_EVEN);
         return result;
+    }
+
+    public ArrayList<IPerson> getMembers(){
+        return members;
+    }
+
+    public void setMembers(ArrayList<IPerson> members){
+        this.members = members;
     }
 
     @Override

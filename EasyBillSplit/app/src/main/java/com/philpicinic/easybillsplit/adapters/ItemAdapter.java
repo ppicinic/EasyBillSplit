@@ -2,7 +2,6 @@ package com.philpicinic.easybillsplit.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
-import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
-import com.philpicinic.easybillsplit.service.ManagerService;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**

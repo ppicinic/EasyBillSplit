@@ -13,8 +13,6 @@ import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
-import org.w3c.dom.Text;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

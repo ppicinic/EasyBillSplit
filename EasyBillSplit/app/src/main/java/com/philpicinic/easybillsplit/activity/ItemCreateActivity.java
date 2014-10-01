@@ -1,13 +1,11 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +15,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -26,12 +22,12 @@ import android.widget.Spinner;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.ItemAdapter;
+import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.dialogs.SharedItemEditDialog;
 import com.philpicinic.easybillsplit.fragments.SharedItemFragment;
 import com.philpicinic.easybillsplit.fragments.SingleItemFragment;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
-import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 

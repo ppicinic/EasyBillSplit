@@ -2,7 +2,6 @@ package com.philpicinic.easybillsplit.item;
 
 import com.philpicinic.easybillsplit.contact.IPerson;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 

@@ -3,11 +3,6 @@ package com.philpicinic.easybillsplit.contact;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-
 /**
  * Created by phil on 9/9/14.
  */

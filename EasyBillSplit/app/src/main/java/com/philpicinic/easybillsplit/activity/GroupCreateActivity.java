@@ -2,9 +2,8 @@ package com.philpicinic.easybillsplit.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;

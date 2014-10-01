@@ -2,7 +2,10 @@ package com.philpicinic.easybillsplit.activity;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -14,14 +17,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.ItemAdapter;
+import com.philpicinic.easybillsplit.dialogs.SharedItemEditDialog;
+import com.philpicinic.easybillsplit.fragments.SharedItemFragment;
+import com.philpicinic.easybillsplit.fragments.SingleItemFragment;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
@@ -35,43 +46,41 @@ public class ItemCreateActivity extends ActionBarActivity {
     private ArrayList<IPerson> members;
     private ArrayList<IItem> items;
     private ItemAdapter itemAdapter;
+    private SingleItemFragment singleItemFragment;
+    private SharedItemFragment sharedItemFragment;
+    private int type;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_create);
+
+        singleItemFragment = new SingleItemFragment();
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        Fragment f = fm.findFragmentByTag("shared_item");
+        if(f != null) {
+            ft.remove(f);
+        }
+        f = fm.findFragmentByTag("single_item");
+        if(f != null){
+            ft.remove(f);
+        }
+        ft.add(R.id.item_fragment, singleItemFragment, "single_item").commit();
+
+        type = 0;
+
+        sharedItemFragment = new SharedItemFragment();
+
         items = ManagerService.getInstance().getItems();
-        members = ManagerService.getInstance().getMembers();
 
-        final Spinner itemMemberChoice = (Spinner) findViewById(R.id.item_member_join);
-        ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_item, members);
-        aa.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        itemMemberChoice.setAdapter(aa);
 
-        final EditText nameText = (EditText) findViewById(R.id.item_name);
-        final EditText priceText = (EditText) findViewById(R.id.item_price);
 
         ListView itemList = (ListView) findViewById(R.id.item_list);
         itemAdapter = new ItemAdapter(this, R.layout.item_bill_amt_layout, items);
         registerForContextMenu(itemList);
         itemList.setAdapter(itemAdapter);
 
-        Button addBtn = (Button) findViewById(R.id.add_item_btn);
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = nameText.getText().toString();
-                String price = priceText.getText().toString();
-                IPerson person = (IPerson) itemMemberChoice.getSelectedItem();
-                if(name != null && name.length() > 0 && price != null && price.length() > 0) {
-                    IItem item = new BasicItem(name, price, person);
-                    items.add(item);
-                    itemAdapter.notifyDataSetChanged();
-                    nameText.setText("");
-                    priceText.setText("");
-                    priceText.clearFocus();
-                }
-            }
-        });
+
 
         Button continueBtn = (Button) findViewById(R.id.item_finish_btn);
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +89,44 @@ public class ItemCreateActivity extends ActionBarActivity {
                 if(items.size() > 0) {
                     Intent intent = new Intent(getApplicationContext(), BillFinalActionActivity.class);
                     startActivity(intent);
+                }
+            }
+        });
+
+        final RadioButton singleBtn = (RadioButton) findViewById(R.id.single_radio_btn);
+        singleBtn.setChecked(true);
+
+        final RadioButton sharedBtn = (RadioButton) findViewById(R.id.shared_radio_btn);
+        RadioGroup viewSwitcher = (RadioGroup) findViewById(R.id.item_type_btn);
+        viewSwitcher.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                if(sharedBtn.isChecked()){
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment f = fm.findFragmentByTag("shared_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    f = fm.findFragmentByTag("single_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    ft.add(R.id.item_fragment, sharedItemFragment, "shared_item");
+                    ft.commit();
+                }else if(singleBtn.isChecked()){
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    Fragment f = fm.findFragmentByTag("shared_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    f = fm.findFragmentByTag("single_item");
+                    if(f != null){
+                        ft.remove(f);
+                    }
+                    ft.add(R.id.item_fragment, singleItemFragment, "single_item");
+                    ft.commit();
                 }
             }
         });
@@ -130,39 +177,64 @@ public class ItemCreateActivity extends ActionBarActivity {
     }
 
     private void showEditDialog(int position){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.item_edit_layout);
-        final IItem item = ManagerService.getInstance().getItems().get(position);
-        final EditText nameText = (EditText) dialog.findViewById(R.id.item_name);
-        nameText.setText(item.toString());
-        final Spinner memberSpinner = (Spinner) dialog.findViewById(R.id.item_member_join);
-        ArrayList<IPerson> members = ManagerService.getInstance().getMembers();
-        ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_dropdown_item, members);
-        memberSpinner.setAdapter(aa);
-        memberSpinner.setSelection(members.indexOf(item.getPerson()));
-        final EditText priceText = (EditText) dialog.findViewById(R.id.item_price);
-        priceText.setText(item.getPrice().toString());
-        Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                item.setName(nameText.getText().toString());
-                item.setPerson((IPerson) memberSpinner.getSelectedItem());
-                item.setPrice(priceText.getText().toString());
-                itemAdapter.notifyDataSetChanged();
-                dialog.cancel();
-            }
-        });
+        if(items.get(position) instanceof BasicItem) {
+            final Dialog dialog = new Dialog(this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.item_edit_layout);
+            final IItem item = ManagerService.getInstance().getItems().get(position);
+            final EditText nameText = (EditText) dialog.findViewById(R.id.item_name);
+            nameText.setText(item.toString());
+            final Spinner memberSpinner = (Spinner) dialog.findViewById(R.id.item_member_join);
+            ArrayList<IPerson> members = ManagerService.getInstance().getMembers();
+            ArrayAdapter<IPerson> aa = new ArrayAdapter<IPerson>(this, android.R.layout.simple_spinner_dropdown_item, members);
+            memberSpinner.setAdapter(aa);
+            memberSpinner.setSelection(members.indexOf(item.getPerson()));
+            final EditText priceText = (EditText) dialog.findViewById(R.id.item_price);
+            priceText.setText(item.getPrice().toString());
+            Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
+            submitBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    item.setName(nameText.getText().toString());
+                    item.setPerson((IPerson) memberSpinner.getSelectedItem());
+                    item.setPrice(priceText.getText().toString());
+                    itemAdapter.notifyDataSetChanged();
+                    dialog.cancel();
+                }
+            });
 
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
+            Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
+            cancelBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.cancel();
+                }
+            });
 
-        dialog.show();
+            dialog.show();
+        }else if(items.get(position) instanceof SharedItem){
+            SharedItemEditDialog dialog = new SharedItemEditDialog();
+            Bundle args = new Bundle();
+            args.putInt("item_id", position);
+            dialog.setArguments(args);
+            dialog.show(getSupportFragmentManager().beginTransaction(), null);
+        }
+    }
+
+    public void addItem(IItem item){
+        items.add(item);
+        itemAdapter.notifyDataSetChanged();
+    }
+
+    public void updateChosenMembers(){
+        sharedItemFragment.updateMembers();
+    }
+
+    public ArrayList<IPerson> getChosenMembers(){
+        return sharedItemFragment.getChosenMembers();
+    }
+
+    public void itemNotify(){
+        itemAdapter.notifyDataSetChanged();
     }
 }

@@ -41,7 +41,8 @@ public class SharedItemEditDialog extends DialogFragment {
         nameText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         final EditText priceText = new EditText(getActivity());
         priceText.setText(item.getPrice().toString());
-        priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        priceText.setInputType(InputType.TYPE_CLASS_NUMBER |
+                InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(nameText);

@@ -91,6 +91,7 @@ public class GroupCreateActivity extends ActionBarActivity {
                 showEditDialog(info.position);
                 return true;
             case DELETE_ACTION:
+                ManagerService.getInstance().deleteMember(members.get(info.position));
                 members.remove(info.position);
                 aa.notifyDataSetChanged();
                 return true;

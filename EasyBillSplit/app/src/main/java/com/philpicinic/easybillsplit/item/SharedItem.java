@@ -63,6 +63,17 @@ public class SharedItem implements IItem{
     }
 
     @Override
+    public boolean deletePerson(IPerson person){
+        if(members.contains(person)){
+            members.remove(person);
+            if(members.size() == 0){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public BigDecimal personTotal(){
         BigDecimal result = this.price.divide(new BigDecimal(members.size()), 2,
                 BigDecimal.ROUND_HALF_EVEN);

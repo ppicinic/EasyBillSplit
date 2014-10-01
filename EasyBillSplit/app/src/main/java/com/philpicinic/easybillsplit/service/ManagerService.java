@@ -124,4 +124,13 @@ public class ManagerService {
     public int getCurrentId(){
         return ++person_id;
     }
+
+    public void deleteMember(IPerson person){
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).deletePerson(person)){
+                items.remove(i);
+                i--;
+            }
+        }
+    }
 }

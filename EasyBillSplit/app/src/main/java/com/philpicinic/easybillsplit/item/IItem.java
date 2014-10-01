@@ -18,5 +18,5 @@ public interface IItem {
     public IPerson getPerson();
     public void setPrice(String price);
     public void setPerson(IPerson person);
-//    public boolean deletePerson(IPerson person);
+    public boolean deletePerson(IPerson person);
 }

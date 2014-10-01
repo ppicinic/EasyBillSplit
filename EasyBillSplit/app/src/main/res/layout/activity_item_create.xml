@@ -12,7 +12,7 @@
         android:id="@+id/item_finish_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue"
+        android:text="@string/continue_text"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
     <LinearLayout
@@ -30,18 +30,18 @@
                 android:id="@+id/single_radio_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Single"/>
+                android:text="@string/single"/>
             <RadioButton
                 android:id="@+id/shared_radio_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shared"/>
+                android:text="@string/shared"/>
         </RadioGroup>
         <FrameLayout
             android:id="@+id/item_fragment"
             android:layout_weight="1"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="0dp"/>
     </LinearLayout>
 
     <ListView

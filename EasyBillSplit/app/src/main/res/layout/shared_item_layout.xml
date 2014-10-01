@@ -4,7 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
-        android:hint="Item name"
+        android:hint="@string/item_name"
         android:id="@+id/item_name"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -15,8 +15,8 @@
     <TextView
         android:id="@+id/person_dropdownlist"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:textSize="16sp"
-        android:text="test"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
         <Spinner
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <EditText
-        android:hint="Price"
+        android:hint="@string/price"
         android:id="@+id/item_price"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -35,7 +35,7 @@
 
     <Button
         android:id="@+id/add_item_btn"
-        android:text="Add"
+        android:text="@string/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

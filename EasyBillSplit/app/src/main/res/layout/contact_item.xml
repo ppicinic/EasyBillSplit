@@ -2,7 +2,10 @@
 
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    android:clickable="true"
-    android:layout_width="match_parent" android:layout_height="wrap_content">
+    android:clickable="false"
+    android:focusable="false"
+    android:textSize="24sp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 </TextView>

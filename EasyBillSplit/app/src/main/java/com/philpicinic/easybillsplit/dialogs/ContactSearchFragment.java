@@ -56,9 +56,7 @@ public class ContactSearchFragment extends DialogFragment implements
 
     @SuppressLint("InlinedApi")
     private static final String SELECTION =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                    ContactsContract.Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
-                    ContactsContract.Contacts.DISPLAY_NAME + " LIKE ?";
+                    ContactsContract.Contacts.HAS_PHONE_NUMBER + ">0";
 
 
     private long mContactId;
@@ -69,7 +67,7 @@ public class ContactSearchFragment extends DialogFragment implements
     private View v;
     private EditText searchBar;
     private String mSearchString;
-    private String[] mSelectionArgs = { mSearchString };
+    private String[] mSelectionArgs = { ">0" };
     private ContactSearchFragment instance;
 
     public ContactSearchFragment() {}
@@ -89,7 +87,6 @@ public class ContactSearchFragment extends DialogFragment implements
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 mSearchString = searchBar.getText().toString();
-                System.out.println(mSearchString);
                 initLoad();
             }
 
@@ -135,15 +132,26 @@ public class ContactSearchFragment extends DialogFragment implements
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        mSelectionArgs[0] = "%" + mSearchString + "%";
-        System.out.println(mSelectionArgs[0]);
+//        mSelectionArgs[0] = ">=1";
+        Uri contentUri;
+        if(mSearchString.length() == 0){
+            contentUri = ContactsContract.Contacts.CONTENT_URI;
+        }else {
+            contentUri = Uri.withAppendedPath(
+                    ContactsContract.Contacts.CONTENT_FILTER_URI,
+                    Uri.encode(mSearchString)
+            );
+        }
+        System.out.println(PROJECTION[2]);
         return new CursorLoader(
                 getActivity(),
-                ContactsContract.Contacts.CONTENT_URI,
+                contentUri,
                 PROJECTION,
                 SELECTION,
-                mSelectionArgs,
-                null
+                null,
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+                        PROJECTION[2] + " ASC":
+                        null
         );
     }
 

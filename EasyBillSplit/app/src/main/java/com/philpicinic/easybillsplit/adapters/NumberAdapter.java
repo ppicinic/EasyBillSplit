@@ -17,20 +17,11 @@ import com.philpicinic.easybillsplit.R;
  */
 public class NumberAdapter extends SimpleCursorAdapter {
 
-    private LayoutInflater inflater;
-    private Context context;
 
     public NumberAdapter(Context context, int resource_id, String[] FROM_COLUMNS,
                          int[] TO_IDS, int flags) {
         super(context, resource_id, null, FROM_COLUMNS, TO_IDS, flags );
-        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        this.context = context;
     }
-
-//    @Override
-//    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-//        return inflater.inflate(R.layout.contact_number_item, null, false);
-//    }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {

@@ -1,20 +1,13 @@
 package com.philpicinic.easybillsplit.dialogs;
 
 import android.app.AlertDialog;
-//import android.app.Dialog;
 import android.app.Dialog;
-//import android.support.v4
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.InputType;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
@@ -22,8 +15,6 @@ import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
-import java.lang.reflect.Array;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -38,7 +29,7 @@ public class SharedItemEditDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         members = ManagerService.getInstance().getMembers();
-        int t = getArguments().getInt("item_id");
+        int t = getArguments().getInt(ItemCreateActivity.ITEM_ID);
         item = (SharedItem) ManagerService.getInstance().getItems().get(t);
         editedMembers = new ArrayList<IPerson>();
         for(IPerson person : item.getMembers()){
@@ -51,7 +42,8 @@ public class SharedItemEditDialog extends DialogFragment {
         nameText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         final EditText priceText = new EditText(getActivity());
         priceText.setText(item.getPrice().toString());
-        priceText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        priceText.setInputType(InputType.TYPE_CLASS_NUMBER |
+                InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(nameText);
@@ -68,8 +60,8 @@ public class SharedItemEditDialog extends DialogFragment {
             }
         });
 
-        builder.setNegativeButton("Cancel", null);
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), null);
+        builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String name = nameText.getText().toString().trim();

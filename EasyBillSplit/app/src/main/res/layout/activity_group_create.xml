@@ -12,7 +12,7 @@
         android:id="@+id/create_finish_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Continue"
+        android:text="@string/continue_text"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"/>
     <LinearLayout
@@ -23,15 +23,14 @@
         android:layout_above="@id/create_finish_btn">
         <EditText
             android:id="@+id/member_name"
-            android:layout_alignParentLeft="true"
             android:layout_weight="1"
-            android:layout_width="fill_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:inputType="textCapWords" />
 
         <Button
             android:id="@+id/add_member_btn"
-            android:text="Add"
+            android:text="@string/add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />

@@ -52,14 +52,16 @@ public class BasicItem implements IItem {
     public BigDecimal personTotal(){
         return price;
     }
+
     @Override
     public void setPrice(String price) {
         this.price = new BigDecimal(price);
         this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
-    public BigDecimal perTotal(){
-        return price;
+    @Override
+    public boolean deletePerson(IPerson person){
+        return this.person.equals(person);
     }
 
     public void setPerson(IPerson person){
@@ -69,5 +71,4 @@ public class BasicItem implements IItem {
     public String toString(){
         return name;
     }
-
 }

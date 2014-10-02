@@ -5,22 +5,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.dialogs.SharePersonDialogFragment;
-import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -42,7 +37,7 @@ public class SharedItemFragment extends Fragment {
         activity = (ItemCreateActivity) getActivity();
 
         memberDropDown = (TextView) view.findViewById(R.id.person_dropdownlist);
-        memberDropDown.setText("You have not selected anyone yet.");
+        memberDropDown.setText(getString(R.string.none_selected));
         memberDropDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,7 +80,7 @@ public class SharedItemFragment extends Fragment {
             sb.delete(sb.length() - 2, sb.length());
             memberDropDown.setText(sb.toString());
         }else{
-            memberDropDown.setText("You have not selected anyone yet.");
+            memberDropDown.setText(getString(R.string.none_selected));
         }
     }
 

@@ -1,10 +1,8 @@
 package com.philpicinic.easybillsplit.service;
 
-import com.philpicinic.easybillsplit.activity.ItemCreateActivity;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.IItem;
 
-import java.lang.reflect.Array;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -125,5 +123,14 @@ public class ManagerService {
 
     public int getCurrentId(){
         return ++person_id;
+    }
+
+    public void deleteMember(IPerson person){
+        for(int i = 0; i < items.size(); i++){
+            if(items.get(i).deletePerson(person)){
+                items.remove(i);
+                i--;
+            }
+        }
     }
 }

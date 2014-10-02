@@ -2,9 +2,8 @@ package com.philpicinic.easybillsplit.activity;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.support.annotation.LayoutRes;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +18,15 @@ import android.widget.ListView;
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
 
 
 public class GroupCreateActivity extends ActionBarActivity {
+
+    public static final String PERSON_ID = "person_id";
 
     private static final int EDIT_ACTION = 0;
     private static final int DELETE_ACTION = 1;
@@ -39,7 +41,7 @@ public class GroupCreateActivity extends ActionBarActivity {
         setContentView(R.layout.activity_group_create);
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
-            members.add(new TextPerson("Me", ManagerService.getInstance().getCurrentId()));
+            members.add(new TextPerson(getString(R.string.me), ManagerService.getInstance().getCurrentId()));
         }
 
         final EditText name = (EditText) findViewById(R.id.member_name);
@@ -79,9 +81,9 @@ public class GroupCreateActivity extends ActionBarActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, "Edit");
-        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, "Delete");
-        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, "Cancel");
+        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, getString(R.string.delete));
+        menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, getString(R.string.cancel));
     }
 
     @Override
@@ -92,6 +94,7 @@ public class GroupCreateActivity extends ActionBarActivity {
                 showEditDialog(info.position);
                 return true;
             case DELETE_ACTION:
+                ManagerService.getInstance().deleteMember(members.get(info.position));
                 members.remove(info.position);
                 aa.notifyDataSetChanged();
                 return true;
@@ -120,31 +123,10 @@ public class GroupCreateActivity extends ActionBarActivity {
     }
 
     public void showEditDialog(int position){
-        final Dialog dialog = new Dialog(this);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.person_edit_layout);
-        final IPerson person = members.get(position);
-        final EditText nameText = (EditText) dialog.findViewById(R.id.member_name);
-        nameText.setText(person.getName());
-
-        Button submitBtn = (Button) dialog.findViewById(R.id.submit_btn);
-        submitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                person.setName(nameText.getText().toString());
-                aa.notifyDataSetChanged();
-                dialog.cancel();
-            }
-        });
-
-        Button cancelBtn = (Button) dialog.findViewById(R.id.cancel_btn);
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.cancel();
-            }
-        });
-
-        dialog.show();
+        MemberEditDialog dialog = new MemberEditDialog();
+        Bundle args = new Bundle();
+        args.putInt(PERSON_ID, position);
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager().beginTransaction(), null);
     }
 }

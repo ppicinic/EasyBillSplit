@@ -94,7 +94,10 @@ public class GroupCreateActivity extends ActionBarActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        if(members.get(adapterContextMenuInfo.position) instanceof TextPerson) {
+            menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        }
         menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, getString(R.string.delete));
         menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, getString(R.string.cancel));
     }

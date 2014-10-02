@@ -13,10 +13,13 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
@@ -64,18 +67,44 @@ public class ContactSearchFragment extends DialogFragment implements
     private SimpleCursorAdapter mCursorAdapter;
     private ListView mContactList;
     private View v;
+    private EditText searchBar;
     private String mSearchString;
     private String[] mSelectionArgs = { mSearchString };
+    private ContactSearchFragment instance;
 
     public ContactSearchFragment() {}
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         mSearchString = "";
+        instance = this;
         v = View.inflate(getActivity(), R.layout.contact_list, null);
+        searchBar = (EditText) v.findViewById(R.id.search_bar);
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+                mSearchString = searchBar.getText().toString();
+                System.out.println(mSearchString);
+                initLoad();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v);
         return builder.create();
+    }
+
+    private void initLoad(){
+        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
@@ -107,6 +136,7 @@ public class ContactSearchFragment extends DialogFragment implements
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         mSelectionArgs[0] = "%" + mSearchString + "%";
+        System.out.println(mSelectionArgs[0]);
         return new CursorLoader(
                 getActivity(),
                 ContactsContract.Contacts.CONTENT_URI,

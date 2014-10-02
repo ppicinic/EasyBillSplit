@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.activity.GroupCreateActivity;
 import com.philpicinic.easybillsplit.adapters.NumberAdapter;
 
 /**
@@ -67,46 +68,24 @@ public class ContactNumberSearchFragment extends DialogFragment implements
     private String mSearchString;
     private String[] mSelectionArgs = { ">0" };
     private long id;
-    private String key;
+    private String name;
 
     public ContactNumberSearchFragment() {}
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
-        mSearchString = "";
-        v = View.inflate(getActivity(), R.layout.contact_list, null);
-//        searchBar = (EditText) v.findViewById(R.id.search_bar);
-//        searchBar.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-//                mSearchString = searchBar.getText().toString();
-//                initLoad();
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//
-//            }
-//        });
+        v = View.inflate(getActivity(), R.layout.contact_number_list, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(v);
         return builder.create();
-    }
-
-    private void initLoad(){
-        getLoaderManager().restartLoader(0, null, this);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         id = getArguments().getLong("ID");
-        key = getArguments().getString("KEY");
+        name = getArguments().getString("NAME");
+//        key = getArguments().getString("KEY");
         mContactList = (ListView) v.findViewById(R.id.contact_list_view);
         mCursorAdapter = new NumberAdapter(
                 getActivity(),
@@ -124,24 +103,20 @@ public class ContactNumberSearchFragment extends DialogFragment implements
     public void onItemClick(AdapterView<?> parent, View item, int position, long rowID){
         Cursor cursor = mCursorAdapter.getCursor();
         cursor.moveToPosition(position);
-//        mContactId = cursor.getLong(CONTACT_ID_INDEX);
-//        mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
-//        mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
+        int number_id = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone._ID));
+        GroupCreateActivity activity = (GroupCreateActivity) getActivity();
+        activity.addContactMember(id, number_id, name);
+        getDialog().cancel();
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         Uri contentUri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-//        contentUri = Uri.withAppendedPath(ContactsContract.CommonDataKinds.Phone.CONTENT_FILTER_URI, Uri.encode(""+id));
-        System.out.println(ContactsContract.CommonDataKinds.Phone.CONTACT_ID);
-        System.out.println(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
         return new CursorLoader(
                 getActivity(),
                 contentUri,
                 null,
                 ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + id,
-//                null,
                 null,
                 null
         );

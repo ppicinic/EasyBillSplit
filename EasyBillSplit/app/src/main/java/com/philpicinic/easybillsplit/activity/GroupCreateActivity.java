@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
@@ -140,5 +141,12 @@ public class GroupCreateActivity extends ActionBarActivity {
         args.putInt(PERSON_ID, position);
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager().beginTransaction(), null);
+    }
+
+    public void addContactMember(long id, int number_id, String name){
+        ContactPerson person = new ContactPerson(ManagerService.getInstance().getCurrentId(),
+                id, number_id, name);
+        members.add(person);
+        aa.notifyDataSetChanged();
     }
 }

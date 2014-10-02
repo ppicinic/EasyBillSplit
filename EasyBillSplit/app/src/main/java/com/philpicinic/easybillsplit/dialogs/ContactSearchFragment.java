@@ -133,20 +133,19 @@ public class ContactSearchFragment extends DialogFragment implements
 
     @Override
     public void onItemClick(AdapterView<?> parent, View item, int position, long rowID){
-        System.out.println("happens");
         Cursor cursor = mCursorAdapter.getCursor();
         cursor.moveToPosition(position);
         mContactId = cursor.getLong(CONTACT_ID_INDEX);
         mContactKey = cursor.getString(LOOKUP_KEY_INDEX);
+        String name = cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
         mContactUri = ContactsContract.Contacts.getLookupUri(mContactId, mContactKey);
         Bundle args = new Bundle();
         args.putLong("ID", mContactId);
-        args.putString("KEY", mContactKey);
+        args.putString("NAME", name);
         ContactNumberSearchFragment newDialog = new ContactNumberSearchFragment();
         newDialog.setArguments(args);
         getDialog().cancel();
         newDialog.show(getFragmentManager().beginTransaction(), null);
-        System.out.println("happens");
 
     }
 

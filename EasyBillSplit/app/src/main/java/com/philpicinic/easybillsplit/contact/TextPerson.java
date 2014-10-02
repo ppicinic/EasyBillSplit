@@ -45,16 +45,6 @@ public class TextPerson implements IPerson {
         return name;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(name);
-    }
-
     public static final Parcelable.Creator<TextPerson> CREATOR = new Parcelable.Creator<TextPerson>() {
         public TextPerson createFromParcel(Parcel in) {
             return new TextPerson(in);

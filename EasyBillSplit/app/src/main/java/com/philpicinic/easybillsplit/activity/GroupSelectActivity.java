@@ -17,9 +17,12 @@ public class GroupSelectActivity extends ActionBarActivity {
     public static final String HAS_NAME = "HAS_NAME";
     public static final String GROUP_NAME = "GROUP_NAME";
 
+    private static GroupSelectActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
         setContentView(R.layout.activity_group_select);
         setTitle(R.string.group_select_activity_name);
 
@@ -68,5 +71,14 @@ public class GroupSelectActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void startItems(){
+        Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+        startActivity(intent);
+    }
+
+    public static GroupSelectActivity getInstance(){
+        return instance;
     }
 }

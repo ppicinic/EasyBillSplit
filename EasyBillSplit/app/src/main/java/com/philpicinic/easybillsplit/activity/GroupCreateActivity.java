@@ -1,14 +1,13 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,6 +18,12 @@ import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.dao.DaoMaster;
+import com.philpicinic.easybillsplit.dao.DaoSession;
+import com.philpicinic.easybillsplit.dao.User;
+import com.philpicinic.easybillsplit.dao.UserDao;
+import com.philpicinic.easybillsplit.dao.UserGroup;
+import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
 import com.philpicinic.easybillsplit.dialogs.GroupSaveDialog;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
@@ -122,8 +127,26 @@ public class GroupCreateActivity extends ActionBarActivity {
     }
 
     public void saveGroup(){
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "group-db", null);
+//        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = ManagerService.getInstance().getDaoMaster();
+        DaoSession daoSession = daoMaster.newSession();
+        UserGroupDao groupDao = daoSession.getUserGroupDao();
+        UserGroup group = new UserGroup();
+        group.setName(groupName);
+        long groupId = groupDao.insert(group);
+        UserDao userDao = daoSession.getUserDao();
+        ArrayList<User> users = new ArrayList<User>(members.size());
+        for(IPerson person : members){
+            User user = new User();
+            user.setName(person.getName());
+            user.setUserId(person.getId());
+            user.setType(0);
+            userDao.insert(user);
+        }
+//        for()
         finish();
-        GroupSelectActivity.getInstance().startItems();
+//        GroupSelectActivity.getInstance().startItems();
     }
 
     @Override

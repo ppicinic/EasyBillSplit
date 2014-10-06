@@ -1,15 +1,28 @@
 package com.philpicinic.easybillsplit.activity;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.contact.MyGroup;
+import com.philpicinic.easybillsplit.dao.DaoMaster;
+import com.philpicinic.easybillsplit.dao.UserGroup;
+import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
+import com.philpicinic.easybillsplit.service.ManagerService;
+
+import java.lang.reflect.Array;
+import java.security.acl.Group;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GroupSelectActivity extends ActionBarActivity {
@@ -19,12 +32,27 @@ public class GroupSelectActivity extends ActionBarActivity {
 
     private static GroupSelectActivity instance;
 
+    private ArrayAdapter<MyGroup> aa;
+    private List<MyGroup> groups;
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
         setContentView(R.layout.activity_group_select);
         setTitle(R.string.group_select_activity_name);
+
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "ebs-group-db", null);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        ManagerService.getInstance().set(daoMaster);
+        UserGroupDao groupDao = daoMaster.newSession().getUserGroupDao();
+        List<UserGroup> groupsRaw = groupDao.queryBuilder().list();
+        groups = transformGroup(groupsRaw);
+        aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
+        listView = (ListView) findViewById(R.id.group_list);
+        listView.setAdapter(aa);
 
         Button btn = (Button)findViewById(R.id.create_group_btn);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +62,29 @@ public class GroupSelectActivity extends ActionBarActivity {
                 dialog.show(getSupportFragmentManager().beginTransaction(), null);
             }
         });
+    }
+//
+//    @Override
+//    protected void onResume(Bundle savedInstanceState){
+//
+//    }
+
+
+    private List<MyGroup> transformGroup(List<UserGroup> groupsRaw){
+        ArrayList<MyGroup> temp = new ArrayList<MyGroup>(groupsRaw.size());
+        for(UserGroup g : groupsRaw){
+            temp.add(new MyGroup(g.getId(), g.getName()));
+        }
+        return temp;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        List<UserGroup> groupsRaw = ManagerService.getInstance().getDaoMaster().newSession().getUserGroupDao().queryBuilder().list();
+        groups = transformGroup(groupsRaw);
+        aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
+        listView.setAdapter(aa);
     }
 
     public void createGroup(){

@@ -1,6 +1,7 @@
 package com.philpicinic.easybillsplit.service;
 
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.dao.DaoMaster;
 import com.philpicinic.easybillsplit.item.IItem;
 
 import java.math.BigDecimal;
@@ -18,6 +19,7 @@ public class ManagerService {
     private BigDecimal taxAmt;
     private BigDecimal tipRate;
     private int person_id;
+    private DaoMaster daoMaster;
 
     private ManagerService(){
         members = new ArrayList<IPerson>();
@@ -42,6 +44,14 @@ public class ManagerService {
     public void reset(){
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
+    }
+
+    public void set(DaoMaster daoMaster){
+        this.daoMaster = daoMaster;
+    }
+
+    public DaoMaster getDaoMaster(){
+        return this.daoMaster;
     }
 
     public void setTaxAmt(BigDecimal tax){

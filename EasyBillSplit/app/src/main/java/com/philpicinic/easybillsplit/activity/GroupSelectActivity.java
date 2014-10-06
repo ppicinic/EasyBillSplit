@@ -17,6 +17,7 @@ import com.philpicinic.easybillsplit.dao.DaoMaster;
 import com.philpicinic.easybillsplit.dao.UserGroup;
 import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
+import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.lang.reflect.Array;
@@ -43,13 +44,7 @@ public class GroupSelectActivity extends ActionBarActivity {
         setContentView(R.layout.activity_group_select);
         setTitle(R.string.group_select_activity_name);
 
-        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "ebs-group-db", null);
-        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = new DaoMaster(db);
-        ManagerService.getInstance().set(daoMaster);
-        UserGroupDao groupDao = daoMaster.newSession().getUserGroupDao();
-        List<UserGroup> groupsRaw = groupDao.queryBuilder().list();
-        groups = transformGroup(groupsRaw);
+        groups = DatabaseService.getInstance().getGroups();
         aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
         listView = (ListView) findViewById(R.id.group_list);
         listView.setAdapter(aa);
@@ -81,8 +76,7 @@ public class GroupSelectActivity extends ActionBarActivity {
     @Override
     public void onResume(){
         super.onResume();
-        List<UserGroup> groupsRaw = ManagerService.getInstance().getDaoMaster().newSession().getUserGroupDao().queryBuilder().list();
-        groups = transformGroup(groupsRaw);
+        groups = DatabaseService.getInstance().getGroups();
         aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
         listView.setAdapter(aa);
     }

@@ -3,6 +3,8 @@ package com.philpicinic.easybillsplit.contact;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.philpicinic.easybillsplit.dao.User;
+
 /**
  * Created by phil on 9/9/14.
  */
@@ -41,6 +43,15 @@ public class TextPerson implements IPerson {
         return id == person.getId();
     }
 
+    public User createDatabaseUser(){
+        User user = new User();
+        user.setUserId(id);
+        user.setType(1);
+        user.setName(name);
+        return user;
+    }
+
+    @Override
     public String toString(){
         return name;
     }

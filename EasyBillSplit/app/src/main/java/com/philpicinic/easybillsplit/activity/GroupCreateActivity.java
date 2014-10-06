@@ -27,6 +27,7 @@ import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
 import com.philpicinic.easybillsplit.dialogs.GroupSaveDialog;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
+import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
@@ -129,22 +130,7 @@ public class GroupCreateActivity extends ActionBarActivity {
     public void saveGroup(){
 //        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "group-db", null);
 //        SQLiteDatabase db = helper.getWritableDatabase();
-        DaoMaster daoMaster = ManagerService.getInstance().getDaoMaster();
-        DaoSession daoSession = daoMaster.newSession();
-        UserGroupDao groupDao = daoSession.getUserGroupDao();
-        UserGroup group = new UserGroup();
-        group.setName(groupName);
-        long groupId = groupDao.insert(group);
-        UserDao userDao = daoSession.getUserDao();
-        ArrayList<User> users = new ArrayList<User>(members.size());
-        for(IPerson person : members){
-            User user = new User();
-            user.setName(person.getName());
-            user.setUserId(person.getId());
-            user.setType(0);
-            userDao.insert(user);
-        }
-//        for()
+        DatabaseService.getInstance().saveGroup(groupName, members);
         finish();
 //        GroupSelectActivity.getInstance().startItems();
     }

@@ -2,6 +2,8 @@ package com.philpicinic.easybillsplit.contact;
 
 import android.os.Parcel;
 
+import com.philpicinic.easybillsplit.dao.User;
+
 /**
  * Created by Phil on 10/2/2014.
  */
@@ -32,6 +34,16 @@ public class ContactPerson implements IPerson {
     @Override
     public String getName() {
         return name;
+    }
+
+    public User createDatabaseUser(){
+        User user = new User();
+        user.setUserId(id);
+        user.setType(2);
+        user.setNumberId(this.number_id);
+        user.setContactId(this.contact_id);
+        user.setName(name);
+        return user;
     }
 
     @Override

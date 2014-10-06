@@ -14,10 +14,10 @@ public class MyDaoGenerator {
         Entity user = schema.addEntity("User");
         user.addIdProperty().autoincrement();
         user.addIntProperty("userId");
-        user.addIntProperty("groupId");
+        user.addLongProperty("groupId");
         user.addIntProperty("type");
         user.addStringProperty("name");
-        user.addIntProperty("contactId");
+        user.addLongProperty("contactId");
         user.addIntProperty("numberId");
         DaoGenerator daoGenerator = new DaoGenerator();
         System.out.println(System.getProperty("user.dir"));

@@ -62,6 +62,13 @@ public class DatabaseService {
                 list();
     }
 
+    public void deleteGroup(long groupId){
+        daoMaster.newSession().getUserGroupDao().deleteByKey(groupId);
+        UserDao userDao = daoMaster.newSession().getUserDao();
+        userDao.queryBuilder().where(UserDao.Properties.GroupId.eq(groupId)).
+                buildDelete().executeDeleteWithoutDetachingEntities();
+    }
+
     public static DatabaseService getInstance(){
         if(instance == null){
             synchronized (DatabaseService.class){

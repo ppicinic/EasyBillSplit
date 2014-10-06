@@ -16,8 +16,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
@@ -34,11 +36,13 @@ public class GroupCreateActivity extends ActionBarActivity {
 
     private ArrayList<IPerson> members;
     private ArrayAdapter<IPerson> aa;
+    private ContactSearchFragment contactDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+//        contactDialog = new ContactSearchFragment();
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
             members.add(new TextPerson(getString(R.string.me), ManagerService.getInstance().getCurrentId()));
@@ -58,6 +62,15 @@ public class GroupCreateActivity extends ActionBarActivity {
                     name.setText("");
                     aa.notifyDataSetChanged();
                 }
+            }
+        });
+
+        Button importBtn = (Button) findViewById(R.id.import_contact_btn);
+        importBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                contactDialog = new ContactSearchFragment();
+                contactDialog.show(getSupportFragmentManager().beginTransaction(), null);
             }
         });
 
@@ -81,7 +94,10 @@ public class GroupCreateActivity extends ActionBarActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
+        if(members.get(adapterContextMenuInfo.position) instanceof TextPerson) {
+            menu.add(Menu.NONE, EDIT_ACTION, Menu.NONE, getString(R.string.edit));
+        }
         menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, getString(R.string.delete));
         menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, getString(R.string.cancel));
     }
@@ -128,5 +144,12 @@ public class GroupCreateActivity extends ActionBarActivity {
         args.putInt(PERSON_ID, position);
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager().beginTransaction(), null);
+    }
+
+    public void addContactMember(long id, int number_id, String name){
+        ContactPerson person = new ContactPerson(ManagerService.getInstance().getCurrentId(),
+                id, number_id, name);
+        members.add(person);
+        aa.notifyDataSetChanged();
     }
 }

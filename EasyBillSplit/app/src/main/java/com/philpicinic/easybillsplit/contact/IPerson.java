@@ -5,7 +5,7 @@ import android.os.Parcelable;
 /**
  * Created by phil on 9/9/14.
  */
-public interface IPerson extends Parcelable {
+public interface IPerson {
 
     public int getId();
     public boolean equals(IPerson person);

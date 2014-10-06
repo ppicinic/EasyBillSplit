@@ -39,6 +39,10 @@ public class GroupCreateActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+        Bundle args = getIntent().getBundleExtra("BUNDLE");
+        if(args.getBoolean(GroupSelectActivity.HAS_NAME)){
+            setTitle(args.getString(GroupSelectActivity.GROUP_NAME));
+        }
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
             members.add(new TextPerson(getString(R.string.me), ManagerService.getInstance().getCurrentId()));

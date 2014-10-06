@@ -9,9 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.philpicinic.easybillsplit.R;
+import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
 
 
 public class GroupSelectActivity extends ActionBarActivity {
+
+    public static final String HAS_NAME = "HAS_NAME";
+    public static final String GROUP_NAME = "GROUP_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +27,27 @@ public class GroupSelectActivity extends ActionBarActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
-                startActivity(intent);
+                GroupNameDialog dialog = new GroupNameDialog();
+                dialog.show(getSupportFragmentManager().beginTransaction(), null);
             }
         });
+    }
+
+    public void createGroup(){
+        Bundle args = new Bundle();
+        args.putBoolean(HAS_NAME, false);
+        Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
+        intent.putExtra("BUNDLE", args);
+        startActivity(intent);
+    }
+
+    public void createGroup(String name){
+        Bundle args = new Bundle();
+        args.putBoolean(HAS_NAME, true);
+        args.putString(GROUP_NAME, name);
+        Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
+        intent.putExtra("BUNDLE", args);
+        startActivity(intent);
     }
 
 

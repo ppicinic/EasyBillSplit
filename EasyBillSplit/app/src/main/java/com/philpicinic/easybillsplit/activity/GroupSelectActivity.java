@@ -125,7 +125,7 @@ public class GroupSelectActivity extends ActionBarActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo){
         super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo adapterContextMenuInfo = (AdapterView.AdapterContextMenuInfo)menuInfo;
-        menu.add(Menu.NONE, VIEW_ACTION, Menu.NONE, "View");
+        menu.add(Menu.NONE, VIEW_ACTION, Menu.NONE, getString(R.string.view));
         menu.add(Menu.NONE, DELETE_ACTION, Menu.NONE, getString(R.string.delete));
         menu.add(Menu.NONE, CANCEL_ACTION, Menu.NONE, getString(R.string.cancel));
     }

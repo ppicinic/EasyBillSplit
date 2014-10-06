@@ -1,11 +1,15 @@
 package com.philpicinic.easybillsplit.service;
 
+import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dao.DaoMaster;
+import com.philpicinic.easybillsplit.dao.User;
 import com.philpicinic.easybillsplit.item.IItem;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by phil on 9/15/14.
@@ -22,11 +26,7 @@ public class ManagerService {
     private DaoMaster daoMaster;
 
     private ManagerService(){
-        members = new ArrayList<IPerson>();
-        items = new ArrayList<IItem>();
-        taxAmt = new BigDecimal("0");
-        tipRate = new BigDecimal("1");
-        person_id = -1;
+        reset();
     }
 
     public static ManagerService getInstance(){
@@ -44,6 +44,9 @@ public class ManagerService {
     public void reset(){
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
+        taxAmt = new BigDecimal("0");
+        tipRate = new BigDecimal("1");
+        person_id = -1;
     }
 
     public void set(DaoMaster daoMaster){
@@ -140,6 +143,23 @@ public class ManagerService {
             if(items.get(i).deletePerson(person)){
                 items.remove(i);
                 i--;
+            }
+        }
+    }
+
+    public void startWithGroup(long groupId){
+        reset();
+        List<User> users = DatabaseService.getInstance().getUsersByGroup(groupId);
+        for(User user : users){
+            if(user.getType() == 1){
+                TextPerson person = new TextPerson(user.getName(), user.getUserId());
+                person.setDatabaseId(user.getId());
+                members.add(person);
+            }else if(user.getType() == 2){
+                ContactPerson person = new ContactPerson(user.getUserId(), user.getContactId(),
+                        user.getNumberId(), user.getName());
+                person.setDatabaseId(user.getId());
+                members.add(person);
             }
         }
     }

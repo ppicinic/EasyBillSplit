@@ -13,6 +13,8 @@ public interface IPerson {
     public boolean equals(IPerson person);
     public String getName();
     public void setName(String name);
+    public void setId(int id);
+    public void setDatabaseId(long id);
 
     public User createDatabaseUser();
 }

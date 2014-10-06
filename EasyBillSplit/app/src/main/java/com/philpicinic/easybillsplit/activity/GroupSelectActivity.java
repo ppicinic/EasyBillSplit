@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -49,6 +50,15 @@ public class GroupSelectActivity extends ActionBarActivity {
         listView = (ListView) findViewById(R.id.group_list);
         listView.setAdapter(aa);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                long groupId = groups.get(i).getId();
+                ManagerService.getInstance().startWithGroup(groupId);
+                Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+                startActivity(intent);
+            }
+        });
         Button btn = (Button)findViewById(R.id.create_group_btn);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +92,7 @@ public class GroupSelectActivity extends ActionBarActivity {
     }
 
     public void createGroup(){
+        ManagerService.getInstance().reset();
         Bundle args = new Bundle();
         args.putBoolean(HAS_NAME, false);
         Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
@@ -90,6 +101,7 @@ public class GroupSelectActivity extends ActionBarActivity {
     }
 
     public void createGroup(String name){
+        ManagerService.getInstance().reset();
         Bundle args = new Bundle();
         args.putBoolean(HAS_NAME, true);
         args.putString(GROUP_NAME, name);

@@ -55,6 +55,13 @@ public class DatabaseService {
         }
     }
 
+    public List<User> getUsersByGroup(long groupId){
+        return daoMaster.newSession().getUserDao().
+                queryBuilder().
+                where(UserDao.Properties.GroupId.eq(groupId)).
+                list();
+    }
+
     public static DatabaseService getInstance(){
         if(instance == null){
             synchronized (DatabaseService.class){

@@ -3,7 +3,7 @@
 
     <string name="app_name">Easy Bill Split</string>
     <string name="group_select_activity_name">Select Group</string>
-    <string name="create_group_name">Add People to the Group</string>
+    <string name="create_group_name">New Group</string>
     <string name="new_group">Create a new group</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -29,6 +29,7 @@
     <string name="delete">Delete</string>
     <string name="me">Me</string>
     <string name="none_selected">You have not selected anyone yet.</string>
+    <string name="group_name_dialog">Name the Group</string>
     <string name="import_contacts">Import from Contacts</string>
-
+    <string name="group_save">Would you like to save this group?</string>
 </resources>

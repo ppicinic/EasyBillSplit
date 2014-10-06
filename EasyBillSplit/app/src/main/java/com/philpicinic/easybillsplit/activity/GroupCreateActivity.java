@@ -20,6 +20,7 @@ import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
+import com.philpicinic.easybillsplit.dialogs.GroupSaveDialog;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
@@ -38,10 +39,21 @@ public class GroupCreateActivity extends ActionBarActivity {
     private ArrayAdapter<IPerson> aa;
     private ContactSearchFragment contactDialog;
 
+    private boolean hasName;
+    private String groupName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+        Bundle args = getIntent().getBundleExtra("BUNDLE");
+        if(args.getBoolean(GroupSelectActivity.HAS_NAME)){
+            groupName = args.getString(GroupSelectActivity.GROUP_NAME);
+            if(groupName.length() > 0) {
+                hasName = true;
+                setTitle(groupName);
+            }
+        }
 //        contactDialog = new ContactSearchFragment();
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
@@ -83,12 +95,35 @@ public class GroupCreateActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if(members.size() > 0){
-                    Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
-                    startActivity(intent);
+                    GroupSaveDialog dialog = new GroupSaveDialog();
+                    Bundle args = new Bundle();
+                    if(!hasName){
+                        StringBuilder sb = new StringBuilder();
+                        for(IPerson person : members){
+                            sb.append(person.toString());
+                            sb.append(", ");
+                        }
+                        sb.deleteCharAt(sb.length() - 1);
+                        sb.deleteCharAt(sb.length() - 1);
+                        groupName = sb.toString();
+                    }
+                    args.putString(GroupSelectActivity.GROUP_NAME, groupName);
+                    dialog.setArguments(args);
+                    dialog.show(getSupportFragmentManager().beginTransaction(), null);
                 }
             }
         });
 
+    }
+
+    public void continueToItems(){
+        Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+        startActivity(intent);
+    }
+
+    public void saveGroup(){
+        finish();
+        GroupSelectActivity.getInstance().startItems();
     }
 
     @Override

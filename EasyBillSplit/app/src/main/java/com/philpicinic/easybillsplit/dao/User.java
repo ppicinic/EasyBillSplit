@@ -8,6 +8,7 @@ public class User {
 
     private Long id;
     private Integer userId;
+    private Integer groupId;
     private Integer type;
     private String name;
     private Integer contactId;
@@ -20,9 +21,10 @@ public class User {
         this.id = id;
     }
 
-    public User(Long id, Integer userId, Integer type, String name, Integer contactId, Integer numberId) {
+    public User(Long id, Integer userId, Integer groupId, Integer type, String name, Integer contactId, Integer numberId) {
         this.id = id;
         this.userId = userId;
+        this.groupId = groupId;
         this.type = type;
         this.name = name;
         this.contactId = contactId;
@@ -43,6 +45,14 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     public Integer getType() {

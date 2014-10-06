@@ -14,6 +14,7 @@ public class MyDaoGenerator {
         Entity user = schema.addEntity("User");
         user.addIdProperty().autoincrement();
         user.addIntProperty("userId");
+        user.addIntProperty("groupId");
         user.addIntProperty("type");
         user.addStringProperty("name");
         user.addIntProperty("contactId");

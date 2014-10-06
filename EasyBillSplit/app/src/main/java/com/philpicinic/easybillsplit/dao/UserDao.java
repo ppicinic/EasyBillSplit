@@ -25,10 +25,11 @@ public class UserDao extends AbstractDao<User, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property UserId = new Property(1, Integer.class, "userId", false, "USER_ID");
-        public final static Property Type = new Property(2, Integer.class, "type", false, "TYPE");
-        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property ContactId = new Property(4, Integer.class, "contactId", false, "CONTACT_ID");
-        public final static Property NumberId = new Property(5, Integer.class, "numberId", false, "NUMBER_ID");
+        public final static Property GroupId = new Property(2, Integer.class, "groupId", false, "GROUP_ID");
+        public final static Property Type = new Property(3, Integer.class, "type", false, "TYPE");
+        public final static Property Name = new Property(4, String.class, "name", false, "NAME");
+        public final static Property ContactId = new Property(5, Integer.class, "contactId", false, "CONTACT_ID");
+        public final static Property NumberId = new Property(6, Integer.class, "numberId", false, "NUMBER_ID");
     };
 
 
@@ -46,10 +47,11 @@ public class UserDao extends AbstractDao<User, Long> {
         db.execSQL("CREATE TABLE " + constraint + "'USER' (" + //
                 "'_id' INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "'USER_ID' INTEGER," + // 1: userId
-                "'TYPE' INTEGER," + // 2: type
-                "'NAME' TEXT," + // 3: name
-                "'CONTACT_ID' INTEGER," + // 4: contactId
-                "'NUMBER_ID' INTEGER);"); // 5: numberId
+                "'GROUP_ID' INTEGER," + // 2: groupId
+                "'TYPE' INTEGER," + // 3: type
+                "'NAME' TEXT," + // 4: name
+                "'CONTACT_ID' INTEGER," + // 5: contactId
+                "'NUMBER_ID' INTEGER);"); // 6: numberId
     }
 
     /** Drops the underlying database table. */
@@ -73,24 +75,29 @@ public class UserDao extends AbstractDao<User, Long> {
             stmt.bindLong(2, userId);
         }
  
+        Integer groupId = entity.getGroupId();
+        if (groupId != null) {
+            stmt.bindLong(3, groupId);
+        }
+ 
         Integer type = entity.getType();
         if (type != null) {
-            stmt.bindLong(3, type);
+            stmt.bindLong(4, type);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(5, name);
         }
  
         Integer contactId = entity.getContactId();
         if (contactId != null) {
-            stmt.bindLong(5, contactId);
+            stmt.bindLong(6, contactId);
         }
  
         Integer numberId = entity.getNumberId();
         if (numberId != null) {
-            stmt.bindLong(6, numberId);
+            stmt.bindLong(7, numberId);
         }
     }
 
@@ -106,10 +113,11 @@ public class UserDao extends AbstractDao<User, Long> {
         User entity = new User( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // userId
-            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // type
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4), // contactId
-            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5) // numberId
+            cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2), // groupId
+            cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3), // type
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // name
+            cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5), // contactId
+            cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6) // numberId
         );
         return entity;
     }
@@ -119,10 +127,11 @@ public class UserDao extends AbstractDao<User, Long> {
     public void readEntity(Cursor cursor, User entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
-        entity.setType(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setContactId(cursor.isNull(offset + 4) ? null : cursor.getInt(offset + 4));
-        entity.setNumberId(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setGroupId(cursor.isNull(offset + 2) ? null : cursor.getInt(offset + 2));
+        entity.setType(cursor.isNull(offset + 3) ? null : cursor.getInt(offset + 3));
+        entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setContactId(cursor.isNull(offset + 5) ? null : cursor.getInt(offset + 5));
+        entity.setNumberId(cursor.isNull(offset + 6) ? null : cursor.getInt(offset + 6));
      }
     
     /** @inheritdoc */

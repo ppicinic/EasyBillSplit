@@ -30,4 +30,5 @@
     <string name="me">Me</string>
     <string name="none_selected">You have not selected anyone yet.</string>
     <string name="group_name_dialog">Name the Group</string>
+    <string name="import_contacts">Import from Contacts</string>
 </resources>

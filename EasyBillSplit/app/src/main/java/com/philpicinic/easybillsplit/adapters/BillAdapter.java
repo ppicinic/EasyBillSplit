@@ -43,6 +43,7 @@ public class BillAdapter extends ArrayAdapter<IPerson> {
         final IPerson person = data.get(position);
         TextView text = (TextView) row.findViewById(R.id.person_name);
         text.setText(person.toString());
+        row.setLongClickable(true);
         row.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

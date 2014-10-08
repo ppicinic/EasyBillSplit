@@ -130,9 +130,9 @@ public class GroupCreateActivity extends ActionBarActivity {
     public void saveGroup(){
 //        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "group-db", null);
 //        SQLiteDatabase db = helper.getWritableDatabase();
-        DatabaseService.getInstance().saveGroup(groupName, members);
+        long groupId = DatabaseService.getInstance().saveGroup(groupName, members);
         finish();
-//        GroupSelectActivity.getInstance().startItems();
+        GroupSelectActivity.getInstance().startItems(groupId);
     }
 
     @Override

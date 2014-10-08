@@ -168,7 +168,8 @@ public class GroupSelectActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void startItems(){
+    public void startItems(long groupId){
+        ManagerService.getInstance().startWithGroup(groupId);
         Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
         startActivity(intent);
     }

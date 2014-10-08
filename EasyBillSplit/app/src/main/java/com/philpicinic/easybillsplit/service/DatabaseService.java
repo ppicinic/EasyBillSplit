@@ -43,7 +43,7 @@ public class DatabaseService {
         return groups;
     }
 
-    public void saveGroup(String name, ArrayList<IPerson> members){
+    public long saveGroup(String name, ArrayList<IPerson> members){
         UserGroup group = new UserGroup();
         group.setName(name);
         long groupId = daoMaster.newSession().getUserGroupDao().insert(group);
@@ -53,6 +53,7 @@ public class DatabaseService {
             user.setGroupId(groupId);
             userDao.insert(user);
         }
+        return groupId;
     }
 
     public List<User> getUsersByGroup(long groupId){

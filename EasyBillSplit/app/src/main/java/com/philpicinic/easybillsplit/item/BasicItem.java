@@ -59,6 +59,12 @@ public class BasicItem implements IItem {
         this.price = this.price.setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
+    public void attachSMS(StringBuilder sb){
+        sb.append(name);
+        sb.append(": $");
+        sb.append(price.toString());
+    }
+
     @Override
     public boolean deletePerson(IPerson person){
         return this.person.equals(person);

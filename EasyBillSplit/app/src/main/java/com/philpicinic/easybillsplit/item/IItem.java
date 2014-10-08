@@ -19,4 +19,6 @@ public interface IItem {
     public void setPrice(String price);
     public void setPerson(IPerson person);
     public boolean deletePerson(IPerson person);
+
+    public void attachSMS(StringBuilder sb);
 }

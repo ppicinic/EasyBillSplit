@@ -45,7 +45,7 @@ public class ManagerService {
         members = new ArrayList<IPerson>();
         items = new ArrayList<IItem>();
         taxAmt = new BigDecimal("0");
-        tipRate = new BigDecimal("1");
+        tipRate = new BigDecimal("0");
         person_id = -1;
     }
 
@@ -63,7 +63,7 @@ public class ManagerService {
 
     public void setTipRate(BigDecimal rate){
         tipRate = rate.divide(new BigDecimal("100"));
-        tipRate = tipRate.add(new BigDecimal("1"));
+//        tipRate = tipRate.add(new BigDecimal("1"));
         tipRate = tipRate.setScale(2, BigDecimal.ROUND_HALF_EVEN);
     }
 
@@ -80,8 +80,8 @@ public class ManagerService {
             }
             completeTotal = completeTotal.add(item.total());
         }
-        total = total.multiply(calculateTaxRate());
-        total = total.multiply(tipRate);
+        total = total.add(total.multiply(calculateTaxRate()));
+        total = total.add(total.multiply(tipRate));
         total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return total;
     }
@@ -92,7 +92,7 @@ public class ManagerService {
             total = total.add(item.total());
         }
         BigDecimal taxRate = taxAmt.divide(total, 5, BigDecimal.ROUND_HALF_EVEN);
-        taxRate = taxRate.add(new BigDecimal("1"));
+//        taxRate = taxRate.add(new BigDecimal("1"));
         return taxRate;
     }
 
@@ -128,8 +128,8 @@ public class ManagerService {
         for(IItem item : items){
             total = total.add(item.total());
         }
-        total = total.multiply(calculateTaxRate());
-        total = total.multiply(tipRate);
+        total = total.add(total.multiply(calculateTaxRate()));
+        total = total.add(total.multiply(tipRate));
         total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
         return total;
     }
@@ -145,6 +145,46 @@ public class ManagerService {
                 i--;
             }
         }
+    }
+
+    public boolean hasAnyItems(ContactPerson person){
+        for(IItem item : items){
+            if(item.hasPerson(person)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getSMSBill(IPerson person){
+        StringBuilder sb = new StringBuilder();
+        BigDecimal total = new BigDecimal("0");
+        for(IItem item : items){
+            if(item.hasPerson(person)) {
+                item.attachSMS(sb);
+                sb.append("\n");
+                total = total.add(item.personTotal());
+            }
+        }
+        BigDecimal subTotal = total;
+        BigDecimal tax = total.multiply(calculateTaxRate());
+        BigDecimal tip = total.add(tax).multiply(tipRate);
+        total = total.add(tax);
+        total = total.add(tip);
+        total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        subTotal = subTotal.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        tip = tip.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+
+        sb.append("SubTotal: $");
+        sb.append(subTotal.toString());
+        sb.append("\nTax: $");
+        sb.append(tax.toString());
+        sb.append("\nTip: $");
+        sb.append(tip.toString());
+        sb.append("\nTotal: $");
+        sb.append(total.toString());
+        return sb.toString();
     }
 
     public void startWithGroup(long groupId){

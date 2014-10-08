@@ -65,6 +65,10 @@ public class ContactPerson implements IPerson {
         this.databaseId = databaseId;
     }
 
+    public long getNumberId(){
+        return this.number_id;
+    }
+
     @Override
     public void setName(String name) {
         this.name = name;

@@ -80,6 +80,18 @@ public class SharedItem implements IItem{
         return result;
     }
 
+    public void attachSMS(StringBuilder sb){
+        sb.append(name);
+        sb.append(':');
+        if(members.size() > 1){
+            sb.append(" (Split ");
+            sb.append(members.size());
+            sb.append(" ways)");
+        }
+        sb.append(" $");
+        sb.append(personTotal().toString());
+    }
+
     public ArrayList<IPerson> getMembers(){
         return members;
     }

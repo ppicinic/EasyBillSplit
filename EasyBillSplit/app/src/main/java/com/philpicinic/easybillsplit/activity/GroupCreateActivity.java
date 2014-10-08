@@ -47,11 +47,13 @@ public class GroupCreateActivity extends ActionBarActivity {
 
     private boolean hasName;
     private String groupName;
+    private boolean saved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+        saved = false;
         Bundle args = getIntent().getBundleExtra("BUNDLE");
         if(args.getBoolean(GroupSelectActivity.HAS_NAME)){
             groupName = args.getString(GroupSelectActivity.GROUP_NAME);
@@ -101,21 +103,26 @@ public class GroupCreateActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if(members.size() > 0){
-                    GroupSaveDialog dialog = new GroupSaveDialog();
-                    Bundle args = new Bundle();
-                    if(!hasName){
-                        StringBuilder sb = new StringBuilder();
-                        for(IPerson person : members){
-                            sb.append(person.toString());
-                            sb.append(", ");
+                    if(!saved) {
+                        GroupSaveDialog dialog = new GroupSaveDialog();
+                        Bundle args = new Bundle();
+                        if (!hasName) {
+                            StringBuilder sb = new StringBuilder();
+                            for (IPerson person : members) {
+                                sb.append(person.toString());
+                                sb.append(", ");
+                            }
+                            sb.deleteCharAt(sb.length() - 1);
+                            sb.deleteCharAt(sb.length() - 1);
+                            groupName = sb.toString();
                         }
-                        sb.deleteCharAt(sb.length() - 1);
-                        sb.deleteCharAt(sb.length() - 1);
-                        groupName = sb.toString();
+                        args.putString(GroupSelectActivity.GROUP_NAME, groupName);
+                        dialog.setArguments(args);
+                        dialog.show(getSupportFragmentManager().beginTransaction(), null);
+                    }else{
+                        Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+                        startActivity(intent);
                     }
-                    args.putString(GroupSelectActivity.GROUP_NAME, groupName);
-                    dialog.setArguments(args);
-                    dialog.show(getSupportFragmentManager().beginTransaction(), null);
                 }
             }
         });
@@ -123,6 +130,7 @@ public class GroupCreateActivity extends ActionBarActivity {
     }
 
     public void continueToItems(){
+        saved = true;
         Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
         startActivity(intent);
     }

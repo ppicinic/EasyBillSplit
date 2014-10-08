@@ -50,7 +50,6 @@ public class ItemCreateActivity extends ActionBarActivity {
     private SingleItemFragment singleItemFragment;
     private SharedItemFragment sharedItemFragment;
     private int type;
-    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

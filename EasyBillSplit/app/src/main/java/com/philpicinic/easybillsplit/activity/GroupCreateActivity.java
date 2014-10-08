@@ -1,14 +1,13 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,9 +18,16 @@ import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
+import com.philpicinic.easybillsplit.dao.DaoMaster;
+import com.philpicinic.easybillsplit.dao.DaoSession;
+import com.philpicinic.easybillsplit.dao.User;
+import com.philpicinic.easybillsplit.dao.UserDao;
+import com.philpicinic.easybillsplit.dao.UserGroup;
+import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
 import com.philpicinic.easybillsplit.dialogs.GroupSaveDialog;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
+import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
 import java.util.ArrayList;
@@ -41,11 +47,13 @@ public class GroupCreateActivity extends ActionBarActivity {
 
     private boolean hasName;
     private String groupName;
+    private boolean saved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
+        saved = false;
         Bundle args = getIntent().getBundleExtra("BUNDLE");
         if(args.getBoolean(GroupSelectActivity.HAS_NAME)){
             groupName = args.getString(GroupSelectActivity.GROUP_NAME);
@@ -95,21 +103,26 @@ public class GroupCreateActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
                 if(members.size() > 0){
-                    GroupSaveDialog dialog = new GroupSaveDialog();
-                    Bundle args = new Bundle();
-                    if(!hasName){
-                        StringBuilder sb = new StringBuilder();
-                        for(IPerson person : members){
-                            sb.append(person.toString());
-                            sb.append(", ");
+                    if(!saved) {
+                        GroupSaveDialog dialog = new GroupSaveDialog();
+                        Bundle args = new Bundle();
+                        if (!hasName) {
+                            StringBuilder sb = new StringBuilder();
+                            for (IPerson person : members) {
+                                sb.append(person.toString());
+                                sb.append(", ");
+                            }
+                            sb.deleteCharAt(sb.length() - 1);
+                            sb.deleteCharAt(sb.length() - 1);
+                            groupName = sb.toString();
                         }
-                        sb.deleteCharAt(sb.length() - 1);
-                        sb.deleteCharAt(sb.length() - 1);
-                        groupName = sb.toString();
+                        args.putString(GroupSelectActivity.GROUP_NAME, groupName);
+                        dialog.setArguments(args);
+                        dialog.show(getSupportFragmentManager().beginTransaction(), null);
+                    }else{
+                        Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
+                        startActivity(intent);
                     }
-                    args.putString(GroupSelectActivity.GROUP_NAME, groupName);
-                    dialog.setArguments(args);
-                    dialog.show(getSupportFragmentManager().beginTransaction(), null);
                 }
             }
         });
@@ -117,13 +130,17 @@ public class GroupCreateActivity extends ActionBarActivity {
     }
 
     public void continueToItems(){
+        saved = true;
         Intent intent = new Intent(getApplicationContext(), ItemCreateActivity.class);
         startActivity(intent);
     }
 
     public void saveGroup(){
+//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "group-db", null);
+//        SQLiteDatabase db = helper.getWritableDatabase();
+        long groupId = DatabaseService.getInstance().saveGroup(groupName, members);
         finish();
-        GroupSelectActivity.getInstance().startItems();
+        GroupSelectActivity.getInstance().startItems(groupId);
     }
 
     @Override

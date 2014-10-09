@@ -1,5 +1,6 @@
 package com.philpicinic.easybillsplit.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -62,6 +63,8 @@ public class GroupCreateActivity extends ActionBarActivity {
                 setTitle(groupName);
             }
         }
+        ActionBar actionBar = getActionBar();
+        actionBar.setHomeButtonEnabled(true);
 //        contactDialog = new ContactSearchFragment();
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
@@ -184,9 +187,16 @@ public class GroupCreateActivity extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            case R.id.action_settings:
+                return true;
         }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
         return super.onOptionsItemSelected(item);
     }
 

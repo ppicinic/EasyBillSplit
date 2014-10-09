@@ -84,6 +84,16 @@ public class BillFinalActionActivity extends BaseActionBarActivity {
             }
         });
 
+        final boolean tipAfterTax = prefs.getBoolean("PREF_TIP_AFTER_TAX", false);
+        final CheckedTextView tipAfterTaxView = (CheckedTextView) findViewById(R.id.tip_after_tax);
+        tipAfterTaxView.setChecked(tipAfterTax);
+        tipAfterTaxView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tipAfterTaxView.setChecked(!tipAfterTaxView.isChecked());
+            }
+        });
+
 
         BigDecimal total = new BigDecimal(0);
         for(IItem item : items){
@@ -93,7 +103,8 @@ public class BillFinalActionActivity extends BaseActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        BigDecimal taxRate = new BigDecimal("8.875");
+        tipText.setText(prefs.getString("PREF_TIP_AMOUNT", "15"));
+        BigDecimal taxRate = new BigDecimal(prefs.getString("PREF_TAX_AMOUNT", "8.875"));
         taxRate = taxRate.divide(new BigDecimal("100"));
         BigDecimal tax = total.multiply(taxRate);
         tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
@@ -104,6 +115,10 @@ public class BillFinalActionActivity extends BaseActionBarActivity {
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                ManagerService managerService = ManagerService.getInstance();
+                managerService.setTaxIncluded(includeTax.isChecked());
+                managerService.setTipIncluded(includeTip.isChecked());
+                managerService.setTipAfterTax(tipAfterTaxView.isChecked());
                 Intent intent = new Intent(getApplication(), BillOutputActivity.class);
                 ManagerService.getInstance().setTaxAmt(new BigDecimal(taxText.getText().toString()));
                 ManagerService.getInstance().setTipRate(new BigDecimal(tipText.getText().toString()));

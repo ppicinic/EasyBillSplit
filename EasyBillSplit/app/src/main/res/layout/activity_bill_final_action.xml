@@ -11,19 +11,25 @@
 
     <CheckedTextView
         android:id="@+id/include_tax"
-        android:text="Include Tax"
-        android:clickable="true"
+        android:text="Include Tax:"
         android:textSize="32sp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     <CheckedTextView
         android:id="@+id/include_tip"
-        android:text="Include Tip"
+        android:text="Include Tip:"
         android:textSize="32sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
+    <CheckedTextView
+        android:id="@+id/tip_after_tax"
+        android:text="Tip after Tax:"
+        android:textSize="32sp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
     <fragment
         android:name="com.philpicinic.easybillsplit.fragments.TaxFragment"
         android:id="@+id/tax_fragment"

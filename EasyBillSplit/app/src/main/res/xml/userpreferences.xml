@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:key="PREF_TAX_CHECK"
+        android:title="Calculate Tax"
+        android:summary="Calculates tax when splitting bill"
+        android:defaultValue="true" />
+    <EditTextPreference
+        android:key="PREF_TAX_AMOUNT"
+        android:title="Tax Amount"
+        android:summary="The tax rate of your area"
+        android:defaultValue="8.875"
+        android:inputType="numberDecimal"/>
+</PreferenceScreen>

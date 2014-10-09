@@ -18,6 +18,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".activity.SettingsActivity"
+            android:label="Settings" >
+        </activity>
+        <activity
             android:name=".activity.GroupCreateActivity"
             android:label="@string/create_group_name" >
         </activity>

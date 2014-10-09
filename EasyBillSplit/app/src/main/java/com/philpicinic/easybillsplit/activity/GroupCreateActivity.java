@@ -1,9 +1,9 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -63,7 +63,8 @@ public class GroupCreateActivity extends ActionBarActivity {
                 setTitle(groupName);
             }
         }
-        ActionBar actionBar = getActionBar();
+//        @SuppressWarnings("TargetApi")
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeButtonEnabled(true);
 //        contactDialog = new ContactSearchFragment();
         members = ManagerService.getInstance().getMembers();

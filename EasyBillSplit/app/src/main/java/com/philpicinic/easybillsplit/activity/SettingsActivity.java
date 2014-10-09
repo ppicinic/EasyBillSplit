@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 
 import com.philpicinic.easybillsplit.R;
 
@@ -19,6 +20,7 @@ public class SettingsActivity extends PreferenceActivity {
     @SuppressWarnings("deprecation")
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         addPreferencesFromResource(R.xml.userpreferences);
 //        findPreference(R.id.)
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -31,10 +33,10 @@ public class SettingsActivity extends PreferenceActivity {
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
                 System.out.println(s);
                 System.out.println(sharedPreferences.getBoolean("PREF_TAX_CHECK", true));
-                if(s.equals("PREF_TAX_CHECK")){
+                if (s.equals("PREF_TAX_CHECK")) {
                     boolean tax = sharedPreferences.getBoolean("PREF_TAX_CHECK", true);
                     getPreferenceScreen().findPreference("PREF_TAX_AMOUNT").setEnabled(tax);
-                }else if(s.equals("PREF_TIP_CHECK")){
+                } else if (s.equals("PREF_TIP_CHECK")) {
                     boolean tip = sharedPreferences.getBoolean(s, true);
                     getPreferenceScreen().findPreference("PREF_TIP_AMOUNT").setEnabled(tip);
                 }

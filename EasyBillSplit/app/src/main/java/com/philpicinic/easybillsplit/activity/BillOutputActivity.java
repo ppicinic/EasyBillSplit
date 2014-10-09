@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
 import android.view.ContextMenu;
@@ -29,7 +30,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.logging.Handler;
 
-public class BillOutputActivity extends ActionBarActivity {
+public class BillOutputActivity extends BaseActionBarActivity {
 
     public static final String PERSON_ID = "person_id";
 
@@ -47,6 +48,9 @@ public class BillOutputActivity extends ActionBarActivity {
 
         items = ManagerService.getInstance().getItems();
         members = ManagerService.getInstance().getMembers();
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         BillAdapter billAdapter = new BillAdapter(this, R.layout.person_bill_amt_layout, members);
 
@@ -153,18 +157,6 @@ public class BillOutputActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.bill_output, menu);
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void checkPersonBill(int id){

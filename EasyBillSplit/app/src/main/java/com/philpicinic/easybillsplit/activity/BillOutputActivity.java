@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
@@ -22,9 +24,14 @@ import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.BillAdapter;
 import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.fragments.SubtotalFragment;
+import com.philpicinic.easybillsplit.fragments.TaxFinalFragment;
+import com.philpicinic.easybillsplit.fragments.TipFinalFragment;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
+
+import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -61,6 +68,33 @@ public class BillOutputActivity extends BaseActionBarActivity {
         TextView totalText = (TextView) findViewById(R.id.total_amt);
         totalText.setText(totalAmount.toString());
 
+        boolean taxIncluded = ManagerService.getInstance().isTaxIncluded();
+        boolean tipIncluded = ManagerService.getInstance().isTipIncluded();
+        FragmentManager fm = getSupportFragmentManager();
+        SubtotalFragment subtotalFragment = (SubtotalFragment)
+                fm.findFragmentById(R.id.subtotal_fragment);
+        TaxFinalFragment taxFinalFragment = (TaxFinalFragment)
+                fm.findFragmentById(R.id.tax_final_fragment);
+        TipFinalFragment tipFinalFragment = (TipFinalFragment)
+                fm.findFragmentById(R.id.tip_final_fragment);
+        FragmentTransaction ft = fm.beginTransaction();
+
+        TextView subTotalText = (TextView) findViewById(R.id.sub_total_amt);
+        TextView taxText = (TextView) findViewById(R.id.tax_amt);
+        TextView tipText = (TextView) findViewById(R.id.tip_amt);
+        subTotalText.setText(ManagerService.getInstance().calculateSubTotal().toString());
+        taxText.setText(ManagerService.getInstance().calculateTax().toString());
+        tipText.setText(ManagerService.getInstance().calculateTip().toString());
+        if(!taxIncluded && !tipIncluded && !subtotalFragment.isHidden()){
+            ft.hide(subtotalFragment);
+        }
+        if(!taxIncluded && !taxFinalFragment.isHidden()){
+            ft.hide(taxFinalFragment);
+        }
+        if(!tipIncluded && !tipFinalFragment.isHidden()){
+            ft.hide(tipFinalFragment);
+        }
+        ft.commit();
         registerForContextMenu(listView);
     }
 

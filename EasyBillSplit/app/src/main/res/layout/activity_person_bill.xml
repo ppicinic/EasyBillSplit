@@ -7,39 +7,62 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.philpicinic.easybillsplit.activity.PersonBillActivity">
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/total_bot"
         android:layout_alignParentBottom="true"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="1px"
-            android:background="#FFCCCCCC" />
-        <TextView
-            android:text="@string/total"
-            android:textSize="32sp"
+        <fragment
+            android:id="@+id/subtotal_fragment"
+            android:name="com.philpicinic.easybillsplit.fragments.SubtotalFragment"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/subtotal_layout"/>
+        <fragment
+            android:id="@+id/tax_final_fragment"
+            android:name="com.philpicinic.easybillsplit.fragments.TaxFinalFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/tax_final_layout"/>
+        <fragment
+            android:id="@+id/tip_final_fragment"
+            android:name="com.philpicinic.easybillsplit.fragments.TipFinalFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/tip_final_layout"/>
+        <RelativeLayout
+
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1px"
+                android:background="#FFCCCCCC" />
             <TextView
+                android:text="@string/total"
                 android:textSize="32sp"
-                android:text="@string/currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/total_amt"
-                android:textSize="32sp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-    </RelativeLayout>
-
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textSize="32sp"
+                    android:text="@string/currency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/total_amt"
+                    android:textSize="32sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
     <ListView
         android:id="@+id/item_bill_list"
         android:layout_alignParentTop="true"

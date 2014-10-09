@@ -1,6 +1,8 @@
 package com.philpicinic.easybillsplit.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.PersonBillAdapter;
 import com.philpicinic.easybillsplit.contact.IPerson;
+import com.philpicinic.easybillsplit.fragments.SubtotalFragment;
+import com.philpicinic.easybillsplit.fragments.TaxFinalFragment;
+import com.philpicinic.easybillsplit.fragments.TipFinalFragment;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
@@ -44,6 +49,34 @@ public class PersonBillActivity extends BaseActionBarActivity {
         }else{
             finish();
         }
+
+        boolean taxIncluded = ManagerService.getInstance().isTaxIncluded();
+        boolean tipIncluded = ManagerService.getInstance().isTipIncluded();
+        FragmentManager fm = getSupportFragmentManager();
+        SubtotalFragment subtotalFragment = (SubtotalFragment)
+                fm.findFragmentById(R.id.subtotal_fragment);
+        TaxFinalFragment taxFinalFragment = (TaxFinalFragment)
+                fm.findFragmentById(R.id.tax_final_fragment);
+        TipFinalFragment tipFinalFragment = (TipFinalFragment)
+                fm.findFragmentById(R.id.tip_final_fragment);
+        FragmentTransaction ft = fm.beginTransaction();
+
+        TextView subTotalText = (TextView) findViewById(R.id.sub_total_amt);
+        TextView taxText = (TextView) findViewById(R.id.tax_amt);
+        TextView tipText = (TextView) findViewById(R.id.tip_amt);
+        subTotalText.setText(ManagerService.getInstance().calculateSubTotal(person).toString());
+        taxText.setText(ManagerService.getInstance().calculateTax(person).toString());
+        tipText.setText(ManagerService.getInstance().calculateTip(person).toString());
+        if(!taxIncluded && !tipIncluded && !subtotalFragment.isHidden()){
+            ft.hide(subtotalFragment);
+        }
+        if(!taxIncluded && !taxFinalFragment.isHidden()){
+            ft.hide(taxFinalFragment);
+        }
+        if(!tipIncluded && !tipFinalFragment.isHidden()){
+            ft.hide(tipFinalFragment);
+        }
+        ft.commit();
     }
 
 

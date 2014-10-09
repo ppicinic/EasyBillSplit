@@ -63,6 +63,14 @@ public class ManagerService {
         tipAfterTax = false;
     }
 
+    public boolean isTaxIncluded() {
+        return taxIncluded;
+    }
+
+    public boolean isTipIncluded() {
+        return tipIncluded;
+    }
+
     public void setTaxIncluded(boolean taxIncluded) {
         this.taxIncluded = taxIncluded;
     }
@@ -208,30 +216,30 @@ public class ManagerService {
 
     public String getSMSBill(IPerson person){
         StringBuilder sb = new StringBuilder();
-        BigDecimal total = new BigDecimal("0");
         for(IItem item : items){
             if(item.hasPerson(person)) {
                 item.attachSMS(sb);
                 sb.append("\n");
-                total = total.add(item.personTotal());
             }
         }
-        BigDecimal subTotal = total;
-        BigDecimal tax = total.multiply(calculateTaxRate());
-        BigDecimal tip = total.add(tax).multiply(tipRate);
-        total = total.add(tax);
-        total = total.add(tip);
-        total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        subTotal = subTotal.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        tip = tip.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-        tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        sb.deleteCharAt(sb.length()-1);
 
-        sb.append("SubTotal: $");
-        sb.append(subTotal.toString());
-        sb.append("\nTax: $");
-        sb.append(tax.toString());
-        sb.append("\nTip: $");
-        sb.append(tip.toString());
+        BigDecimal total = calculatePerson(person);
+        if(taxIncluded && tipIncluded) {
+            BigDecimal subTotal = calculateSubTotal(person);
+            sb.append("\nSubTotal: $");
+            sb.append(subTotal.toString());
+        }
+        if(taxIncluded) {
+            BigDecimal tax = calculateTax(person);
+            sb.append("\nTax: $");
+            sb.append(tax.toString());
+        }
+        if(tipIncluded) {
+            BigDecimal tip = calculateTip(person);
+            sb.append("\nTip: $");
+            sb.append(tip.toString());
+        }
         sb.append("\nTotal: $");
         sb.append(total.toString());
         return sb.toString();
@@ -252,5 +260,59 @@ public class ManagerService {
                 members.add(person);
             }
         }
+    }
+
+    public BigDecimal calculateSubTotal(){
+        BigDecimal total = new BigDecimal("0");
+        for(IItem item : items){
+            total = total.add(item.total());
+        }
+        total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return total;
+    }
+
+    public BigDecimal calculateTax(){
+        BigDecimal total = calculateSubTotal();
+        BigDecimal tax = total.multiply(calculateTaxRate());
+        tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return tax;
+    }
+
+    public BigDecimal calculateTip(){
+        BigDecimal total = calculateSubTotal();
+        if(tipAfterTax){
+            total = total.add(total.multiply(calculateTaxRate()));
+        }
+        BigDecimal tip = total.multiply(tipRate);
+        tip = tip.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return tip;
+    }
+
+    public BigDecimal calculateSubTotal(IPerson person){
+        BigDecimal total = new BigDecimal("0");
+        for(IItem item : items){
+            if(item.hasPerson(person)) {
+                total = total.add(item.personTotal());
+            }
+        }
+        total = total.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return total;
+    }
+
+    public BigDecimal calculateTax(IPerson person){
+        BigDecimal total = calculateSubTotal(person);
+        BigDecimal tax = total.multiply(calculateTaxRate());
+        tax = tax.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return tax;
+    }
+
+    public BigDecimal calculateTip(IPerson person){
+        BigDecimal total = calculateSubTotal(person);
+        if(tipAfterTax){
+            total = total.add(total.multiply(calculateTaxRate()));
+        }
+        BigDecimal tip = total.multiply(tipRate);
+        tip = tip.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+        return tip;
     }
 }

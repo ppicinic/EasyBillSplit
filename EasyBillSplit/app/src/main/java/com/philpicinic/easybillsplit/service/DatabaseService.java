@@ -1,20 +1,15 @@
 package com.philpicinic.easybillsplit.service;
 
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteDatabaseLockedException;
 
-import com.philpicinic.easybillsplit.activity.GroupCreateActivity;
 import com.philpicinic.easybillsplit.activity.GroupSelectActivity;
-import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.MyGroup;
-import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dao.DaoMaster;
 import com.philpicinic.easybillsplit.dao.User;
 import com.philpicinic.easybillsplit.dao.UserDao;
 import com.philpicinic.easybillsplit.dao.UserGroup;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,10 +1,5 @@
 package com.philpicinic.easybillsplit.service;
 
-import android.content.SharedPreferences;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-
-import com.philpicinic.easybillsplit.activity.GroupSelectActivity;
 import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;

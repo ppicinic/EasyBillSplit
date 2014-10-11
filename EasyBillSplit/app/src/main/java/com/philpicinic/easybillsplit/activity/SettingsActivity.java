@@ -1,11 +1,9 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBar;
 
 import com.philpicinic.easybillsplit.R;
 

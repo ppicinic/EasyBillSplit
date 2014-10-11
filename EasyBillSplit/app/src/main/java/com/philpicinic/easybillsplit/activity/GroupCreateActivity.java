@@ -1,10 +1,8 @@
 package com.philpicinic.easybillsplit.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +17,6 @@ import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.ContactPerson;
 import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.contact.TextPerson;
-import com.philpicinic.easybillsplit.dao.DaoMaster;
-import com.philpicinic.easybillsplit.dao.DaoSession;
-import com.philpicinic.easybillsplit.dao.User;
-import com.philpicinic.easybillsplit.dao.UserDao;
-import com.philpicinic.easybillsplit.dao.UserGroup;
-import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.ContactSearchFragment;
 import com.philpicinic.easybillsplit.dialogs.GroupSaveDialog;
 import com.philpicinic.easybillsplit.dialogs.MemberEditDialog;
@@ -140,8 +132,6 @@ public class GroupCreateActivity extends BaseActionBarActivity {
     }
 
     public void saveGroup(){
-//        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, "group-db", null);
-//        SQLiteDatabase db = helper.getWritableDatabase();
         long groupId = DatabaseService.getInstance().saveGroup(groupName, members);
         finish();
         GroupSelectActivity.getInstance().startItems(groupId);

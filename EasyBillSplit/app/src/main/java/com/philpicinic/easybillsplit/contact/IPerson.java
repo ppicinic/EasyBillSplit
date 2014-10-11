@@ -1,7 +1,5 @@
 package com.philpicinic.easybillsplit.contact;
 
-import android.os.Parcelable;
-
 import com.philpicinic.easybillsplit.dao.User;
 
 /**

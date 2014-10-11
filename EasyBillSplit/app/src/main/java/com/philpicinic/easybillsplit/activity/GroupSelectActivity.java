@@ -1,11 +1,8 @@
 package com.philpicinic.easybillsplit.activity;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,16 +14,11 @@ import android.widget.ListView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.MyGroup;
-import com.philpicinic.easybillsplit.contact.TextPerson;
-import com.philpicinic.easybillsplit.dao.DaoMaster;
 import com.philpicinic.easybillsplit.dao.UserGroup;
-import com.philpicinic.easybillsplit.dao.UserGroupDao;
 import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
 import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
 
-import java.lang.reflect.Array;
-import java.security.acl.Group;
 import java.util.ArrayList;
 import java.util.List;
 

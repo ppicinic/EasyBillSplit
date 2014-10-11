@@ -3,13 +3,11 @@ package com.philpicinic.easybillsplit.activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.telephony.SmsManager;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -28,14 +26,10 @@ import com.philpicinic.easybillsplit.fragments.SubtotalFragment;
 import com.philpicinic.easybillsplit.fragments.TaxFinalFragment;
 import com.philpicinic.easybillsplit.fragments.TipFinalFragment;
 import com.philpicinic.easybillsplit.item.IItem;
-import com.philpicinic.easybillsplit.service.DatabaseService;
 import com.philpicinic.easybillsplit.service.ManagerService;
-
-import org.w3c.dom.Text;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.logging.Handler;
 
 public class BillOutputActivity extends BaseActionBarActivity {
 

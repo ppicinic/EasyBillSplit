@@ -11,9 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.MyGroup;
+import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dao.UserGroup;
 import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
 import com.philpicinic.easybillsplit.service.DatabaseService;
@@ -48,6 +50,10 @@ public class GroupSelectActivity extends BaseActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
 
         groups = DatabaseService.getInstance().getGroups();
+        TextView selectText = (TextView) findViewById(R.id.select_group_text);
+        if(groups.size() == 0){
+            selectText.setText(getString(R.string.no_groups));
+        }
         aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
         listView = (ListView) findViewById(R.id.group_list);
         listView.setAdapter(aa);

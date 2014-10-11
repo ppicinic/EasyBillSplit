@@ -10,14 +10,37 @@
     tools:context=".activity.GroupSelectActivity">
 
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/group_layout_top">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center">
     <Button
         android:id="@+id/create_group_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/new_group" />
+        <Button
+            android:id="@+id/simple_calculator_button"
+            android:text="@string/simple_split"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout>
+    <TextView
+        android:id="@+id/select_group_text"
+        android:text="@string/select_group"
+        android:textSize="24sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    </LinearLayout>
     <ListView
         android:id="@+id/group_list"
-        android:layout_below="@id/create_group_btn"
+        android:layout_below="@id/group_layout_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 

@@ -100,20 +100,15 @@ public class GroupSelectActivity extends BaseActionBarActivity {
 
     public void createGroup(){
         ManagerService.getInstance().reset();
-        Bundle args = new Bundle();
-        args.putBoolean(HAS_NAME, false);
         Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
-        intent.putExtra("BUNDLE", args);
         startActivity(intent);
     }
 
     public void createGroup(String name){
         ManagerService.getInstance().reset();
-        Bundle args = new Bundle();
-        args.putBoolean(HAS_NAME, true);
-        args.putString(GROUP_NAME, name);
         Intent intent = new Intent(getApplicationContext(), GroupCreateActivity.class);
-        intent.putExtra("BUNDLE", args);
+        intent.putExtra(HAS_NAME, true);
+        intent.putExtra(GROUP_NAME, name);
         startActivity(intent);
     }
 

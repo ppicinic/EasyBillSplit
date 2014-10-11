@@ -47,9 +47,9 @@ public class GroupCreateActivity extends BaseActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_create);
         saved = false;
-        Bundle args = getIntent().getBundleExtra("BUNDLE");
-        if(args.getBoolean(GroupSelectActivity.HAS_NAME)){
-            groupName = args.getString(GroupSelectActivity.GROUP_NAME);
+        Intent intent = getIntent();
+        if(intent.getBooleanExtra(GroupSelectActivity.HAS_NAME, false)){
+            groupName = intent.getStringExtra(GroupSelectActivity.GROUP_NAME);
             if(groupName.length() > 0) {
                 hasName = true;
                 setTitle(groupName);

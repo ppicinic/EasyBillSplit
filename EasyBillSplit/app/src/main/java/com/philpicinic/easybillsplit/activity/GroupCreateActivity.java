@@ -3,6 +3,7 @@ package com.philpicinic.easybillsplit.activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -33,7 +34,7 @@ import com.philpicinic.easybillsplit.service.ManagerService;
 import java.util.ArrayList;
 
 
-public class GroupCreateActivity extends ActionBarActivity {
+public class GroupCreateActivity extends BaseActionBarActivity {
 
     public static final String PERSON_ID = "person_id";
 
@@ -62,6 +63,9 @@ public class GroupCreateActivity extends ActionBarActivity {
                 setTitle(groupName);
             }
         }
+//        @SuppressWarnings("TargetApi")
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 //        contactDialog = new ContactSearchFragment();
         members = ManagerService.getInstance().getMembers();
         if(members.size() == 0) {
@@ -178,17 +182,6 @@ public class GroupCreateActivity extends ActionBarActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void showEditDialog(int position){
         MemberEditDialog dialog = new MemberEditDialog();

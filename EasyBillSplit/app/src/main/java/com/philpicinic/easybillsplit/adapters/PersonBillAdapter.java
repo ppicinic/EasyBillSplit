@@ -47,7 +47,7 @@ public class PersonBillAdapter extends ArrayAdapter<IItem> {
         text.setText(item.toString());
 
         TextView priceText = (TextView) row.findViewById(R.id.item_total_amt);
-        BigDecimal amount = ManagerService.getInstance().calculateItemForPerson(item, person);
+        BigDecimal amount = ManagerService.getInstance().calculateItemForPerson(item);
         priceText.setText(amount.toString());
         return row;
     }

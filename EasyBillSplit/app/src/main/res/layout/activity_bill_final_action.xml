@@ -9,64 +9,42 @@
     android:orientation="vertical"
     tools:context="com.philpicinic.easybillsplit.activity.BillFinalActionActivity">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <TextView
-        android:text="@string/tip"
+    <CheckedTextView
+        android:id="@+id/include_tax"
+        android:text="Include Tax:"
         android:textSize="32sp"
-        android:layout_width="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/tip_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="32sp"
-                android:inputType="number"
-                android:text="15"/>
-        <TextView
-            android:id="@+id/percent_text"
-            android:textSize="32sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/percent"/>
-
-        </LinearLayout>
-        </RelativeLayout>
-
-    <RelativeLayout
+    <CheckedTextView
+        android:id="@+id/include_tip"
+        android:text="Include Tip:"
+        android:textSize="32sp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
+    <CheckedTextView
+        android:id="@+id/tip_after_tax"
+        android:text="Tip after Tax:"
+        android:textSize="32sp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <fragment
+        android:name="com.philpicinic.easybillsplit.fragments.TaxFragment"
+        android:id="@+id/tax_fragment"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tax"
-            android:textSize="32sp"/>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true">
-            <EditText
-                android:id="@+id/tax_input"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="numberDecimal"
-                android:text="0.00"
-                android:textSize="32sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/currency"
-                android:textSize="32sp"/>
-            </LinearLayout>
-        </RelativeLayout>
+        android:layout_height="wrap_content"
+        tools:layout="@layout/tax_layout" />
+
+    <fragment
+        android:name="com.philpicinic.easybillsplit.fragments.TipFragment"
+        android:id="@+id/tip_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/tip_layout"/>
+
+
     <Button
         android:id="@+id/final_btn"
         android:layout_width="wrap_content"

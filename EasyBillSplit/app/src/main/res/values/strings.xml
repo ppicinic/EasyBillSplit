@@ -38,4 +38,6 @@
     <string name="select_group">Select a group to start with:</string>
     <string name="no_groups">You have no saved groups.</string>
     <string name="simple_split">Simple Split</string>
+    <string name="title_activity_simple_splitter">SimpleSplitter</string>
+
 </resources>

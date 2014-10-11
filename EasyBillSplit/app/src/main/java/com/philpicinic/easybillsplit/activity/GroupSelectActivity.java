@@ -76,6 +76,15 @@ public class GroupSelectActivity extends BaseActionBarActivity {
                 dialog.show(getSupportFragmentManager().beginTransaction(), null);
             }
         });
+
+        Button simpleSplitBtn = (Button) findViewById(R.id.simple_calculator_button);
+        simpleSplitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), SimpleSplitter.class);
+                startActivity(intent);
+            }
+        });
     }
 //
 //    @Override

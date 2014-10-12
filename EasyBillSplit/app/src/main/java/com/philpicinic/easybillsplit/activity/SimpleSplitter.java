@@ -48,8 +48,8 @@ public class SimpleSplitter extends BaseActionBarActivity {
         fullTotalText = (TextView) findViewById(R.id.total_bill);
 
         number = 2;
-        subTotalPrice = new BigDecimal("0.00");
-        taxPrice = new BigDecimal("0.00");
+        subTotalPrice = new BigDecimal("0");
+        taxPrice = new BigDecimal("0");
 
 
 
@@ -84,7 +84,8 @@ public class SimpleSplitter extends BaseActionBarActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 String amount = subTotal.getText().toString().trim();
                 if(amount.length() > 0) {
-                    subTotalPrice = new BigDecimal(subTotal.getText().toString());
+                    try {
+                        subTotalPrice = new BigDecimal(subTotal.getText().toString());
 //                        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 //                        BigDecimal taxRate = new BigDecimal(pref.getString("PREF_TAX_AMOUNT", "8.875"));
 //                        taxRate = taxRate.divide(new BigDecimal("100"), 5, BigDecimal.ROUND_HALF_UP);
@@ -95,7 +96,8 @@ public class SimpleSplitter extends BaseActionBarActivity {
 //                        text.replace(0, text.length() -1, taxPrice.toString());
 ////                        taxAmount.setText(taxPrice.toString());
 
-                    update();
+                        update();
+                    }catch(NumberFormatException ne){}
                 }
             }
 
@@ -113,11 +115,11 @@ public class SimpleSplitter extends BaseActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                System.out.println("happens");
                 if(taxAmount.getText().toString().trim().length() > 0) {
-                    taxSet = true;
-                    taxPrice = new BigDecimal(taxAmount.getText().toString());
-                    update();
+                    try {
+                        taxPrice = new BigDecimal(taxAmount.getText().toString());
+                        update();
+                    }catch(NumberFormatException ne){}
                 }
             }
 

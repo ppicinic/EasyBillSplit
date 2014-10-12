@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="32sp"
                 android:inputType="numberDecimal"
-                android:text="0.00"/>
+                android:text="0"/>
             </LinearLayout>
             </RelativeLayout>
         <RelativeLayout
@@ -87,7 +87,7 @@
                 android:id="@+id/tax_amt"
                     android:inputType="numberDecimal"
                 android:textSize="32sp"
-                android:text="0.00"/>
+                android:text="0"/>
             </LinearLayout>
             </RelativeLayout>
         <RelativeLayout

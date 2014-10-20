@@ -108,7 +108,7 @@
                     android:id="@+id/tip_amt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:text="15"
                     android:textSize="32sp"/>
                 <TextView

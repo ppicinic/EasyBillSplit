@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.service.ManagerService;
+import com.philpicinic.easybillsplit.util.NumberChecker;
 
 import java.math.BigDecimal;
 
@@ -83,21 +84,9 @@ public class SimpleSplitter extends BaseActionBarActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
                 String amount = subTotal.getText().toString().trim();
-                if(amount.length() > 0) {
-                    try {
-                        subTotalPrice = new BigDecimal(subTotal.getText().toString());
-//                        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-//                        BigDecimal taxRate = new BigDecimal(pref.getString("PREF_TAX_AMOUNT", "8.875"));
-//                        taxRate = taxRate.divide(new BigDecimal("100"), 5, BigDecimal.ROUND_HALF_UP);
-//                        taxPrice = subTotalPrice.multiply(taxRate);
-//                        taxPrice = taxPrice.setScale(2, BigDecimal.ROUND_HALF_UP);
-//                        Editable text = taxAmount.getText();
-//                    text.
-//                        text.replace(0, text.length() -1, taxPrice.toString());
-////                        taxAmount.setText(taxPrice.toString());
-
-                        update();
-                    }catch(NumberFormatException ne){}
+                if(amount.length() > 0 && NumberChecker.isNumeric(amount)) {
+                    subTotalPrice = new BigDecimal(subTotal.getText().toString());
+                    update();
                 }
             }
 
@@ -115,11 +104,10 @@ public class SimpleSplitter extends BaseActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                if(taxAmount.getText().toString().trim().length() > 0) {
-                    try {
-                        taxPrice = new BigDecimal(taxAmount.getText().toString());
-                        update();
-                    }catch(NumberFormatException ne){}
+                String amount = taxAmount.getText().toString().trim();
+                if(amount.length() > 0 && NumberChecker.isNumeric(amount)) {
+                    taxPrice = new BigDecimal(taxAmount.getText().toString());
+                    update();
                 }
             }
 
@@ -137,7 +125,8 @@ public class SimpleSplitter extends BaseActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
-                if(tipAmount.getText().toString().trim().length() > 0) {
+                String amount = tipAmount.getText().toString().trim();
+                if(amount.length() > 0 && NumberChecker.isNumeric(amount)) {
                     tipPercent = new BigDecimal(tipAmount.getText().toString());
                     tipPercent = tipPercent.divide(new BigDecimal(100), 4, BigDecimal.ROUND_HALF_UP);
                     update();

@@ -6,6 +6,6 @@ package com.philpicinic.easybillsplit.util;
 public class NumberChecker {
 
     public static boolean isNumeric(String str){
-        return str.matches("-?\\d+(\\.\\d*)?");  //match a number with optional '-' and decimal.
+        return str.matches("-?\\d+(\\.\\d*)?") || str.matches("\\.\\d+");  //match a number with optional '-' and decimal.
     }
 }

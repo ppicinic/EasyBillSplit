@@ -16,6 +16,7 @@ import com.philpicinic.easybillsplit.dialogs.SharePersonDialogFragment;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.item.SharedItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
+import com.philpicinic.easybillsplit.util.NumberChecker;
 
 import java.util.ArrayList;
 
@@ -53,9 +54,10 @@ public class SharedItemFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameText.getText().toString();
-                String price = priceText.getText().toString();
-                if(name != null && name.length() > 0 && price != null && price.length() > 0 && membersChosen.size() > 0) {
+                String name = nameText.getText().toString().trim();
+                String price = priceText.getText().toString().trim();
+                if(name != null && name.length() > 0 && price != null && price.length() > 0 &&
+                        membersChosen.size() > 0 && NumberChecker.isNumeric(price)) {
                     IItem item = new SharedItem(name, price, membersChosen);
                     activity.addItem(item);
                     nameText.setText("");
@@ -63,6 +65,8 @@ public class SharedItemFragment extends Fragment {
                     updateMembers();
                     priceText.setText("");
                     priceText.clearFocus();
+                }else{
+                    activity.invalidItemToast();
                 }
             }
         });

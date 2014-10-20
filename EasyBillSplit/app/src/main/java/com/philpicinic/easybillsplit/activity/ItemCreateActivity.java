@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.adapters.ItemAdapter;
@@ -195,5 +196,11 @@ public class ItemCreateActivity extends BaseActionBarActivity {
 
     public void itemNotify(){
         itemAdapter.notifyDataSetChanged();
+    }
+
+    public void invalidItemToast(){
+        Toast toast = Toast.makeText(getApplicationContext(),
+                getString(R.string.invalid_item), Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

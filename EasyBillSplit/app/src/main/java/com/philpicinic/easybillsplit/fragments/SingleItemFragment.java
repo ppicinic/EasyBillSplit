@@ -17,6 +17,7 @@ import com.philpicinic.easybillsplit.contact.IPerson;
 import com.philpicinic.easybillsplit.item.BasicItem;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
+import com.philpicinic.easybillsplit.util.NumberChecker;
 
 import java.util.ArrayList;
 
@@ -46,15 +47,18 @@ public class SingleItemFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = nameText.getText().toString();
-                String price = priceText.getText().toString();
+                String name = nameText.getText().toString().trim();
+                String price = priceText.getText().toString().trim();
                 IPerson person = (IPerson) itemMemberChoice.getSelectedItem();
-                if(name != null && name.length() > 0 && price != null && price.length() > 0) {
+                if(name != null && name.length() > 0 && price != null && price.length() > 0
+                        && NumberChecker.isNumeric(price)) {
                     IItem item = new BasicItem(name, price, person);
                     activity.addItem(item);
                     nameText.setText("");
                     priceText.setText("");
                     priceText.clearFocus();
+                }else{
+                    activity.invalidItemToast();
                 }
             }
         });

@@ -29,8 +29,6 @@ public class SettingsActivity extends PreferenceActivity {
         prefs.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
             @Override
             public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
-                System.out.println(s);
-                System.out.println(sharedPreferences.getBoolean("PREF_TAX_CHECK", true));
                 if (s.equals("PREF_TAX_CHECK")) {
                     boolean tax = sharedPreferences.getBoolean("PREF_TAX_CHECK", true);
                     getPreferenceScreen().findPreference("PREF_TAX_AMOUNT").setEnabled(tax);

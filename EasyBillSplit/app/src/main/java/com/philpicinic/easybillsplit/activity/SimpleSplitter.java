@@ -2,6 +2,7 @@ package com.philpicinic.easybillsplit.activity;
 
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -36,6 +37,9 @@ public class SimpleSplitter extends BaseActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_simple_splitter);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         taxSet = false;
         numberPersons = (EditText) findViewById(R.id.number_of_persons);

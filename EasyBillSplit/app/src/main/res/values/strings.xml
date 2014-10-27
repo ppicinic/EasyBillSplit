@@ -41,4 +41,5 @@
     <string name="title_activity_simple_splitter">Simple Splitter</string>
     <string name="invalid_item">The item you entered has an invalid property.</string>
     <string name="invalid_property">A field you entered has an invalid entry.</string>
+    <string name="name_hint">Enter a name</string>
 </resources>

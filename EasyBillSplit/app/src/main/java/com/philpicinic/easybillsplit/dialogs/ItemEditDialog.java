@@ -37,10 +37,12 @@ public class ItemEditDialog extends DialogFragment{
         final EditText nameText = new EditText(getActivity());
         nameText.setText(item.getName());
         nameText.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        nameText.setHint(R.string.item_name);
         final EditText priceText = new EditText(getActivity());
         priceText.setText(item.getPrice().toString());
         priceText.setInputType(InputType.TYPE_CLASS_NUMBER |
                 InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        priceText.setHint(R.string.price);
         LinearLayout layout = new LinearLayout(getActivity());
         layout.setOrientation(LinearLayout.VERTICAL);
         layout.addView(nameText);

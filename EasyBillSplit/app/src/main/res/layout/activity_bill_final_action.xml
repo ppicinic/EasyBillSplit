@@ -10,25 +10,25 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
     <CheckedTextView
         android:id="@+id/include_tax"
-        android:text="Include Tax:"
+        android:text="@string/include_tax"
         android:textSize="32sp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
     <CheckedTextView
         android:id="@+id/include_tip"
-        android:text="Include Tip:"
+        android:text="@string/include_tip"
         android:textSize="32sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple" />
     <CheckedTextView
         android:id="@+id/tip_after_tax"
-        android:text="Tip after Tax:"
+        android:text="@string/tip_after_tax"
         android:textSize="32sp"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:layout_width="fill_parent"

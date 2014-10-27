@@ -12,12 +12,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.fragments.TaxFragment;
 import com.philpicinic.easybillsplit.fragments.TipFragment;
 import com.philpicinic.easybillsplit.item.IItem;
 import com.philpicinic.easybillsplit.service.ManagerService;
+import com.philpicinic.easybillsplit.util.NumberChecker;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -117,9 +119,18 @@ public class BillFinalActionActivity extends BaseActionBarActivity {
                 managerService.setTipIncluded(includeTip.isChecked());
                 managerService.setTipAfterTax(tipAfterTaxView.isChecked());
                 Intent intent = new Intent(getApplication(), BillOutputActivity.class);
-                ManagerService.getInstance().setTaxAmt(new BigDecimal(taxText.getText().toString()));
-                ManagerService.getInstance().setTipRate(new BigDecimal(tipText.getText().toString()));
-                startActivity(intent);
+                String tax = taxText.getText().toString().trim();
+                String tip = tipText.getText().toString().trim();
+                if(tax.length() > 0 && tip.length() > 0 && NumberChecker.isNumeric(tax) &&
+                        NumberChecker.isNumeric(tip)) {
+                    ManagerService.getInstance().setTaxAmt(new BigDecimal(taxText.getText().toString()));
+                    ManagerService.getInstance().setTipRate(new BigDecimal(tipText.getText().toString()));
+                    startActivity(intent);
+                }else{
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            getString(R.string.invalid_property), Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }

@@ -37,6 +37,7 @@ public class GroupSelectActivity extends BaseActionBarActivity {
     private ArrayAdapter<MyGroup> aa;
     private List<MyGroup> groups;
     private ListView listView;
+    private TextView selectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class GroupSelectActivity extends BaseActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
 
         groups = DatabaseService.getInstance().getGroups();
-        TextView selectText = (TextView) findViewById(R.id.select_group_text);
+        selectText = (TextView) findViewById(R.id.select_group_text);
         if(groups.size() == 0){
             selectText.setText(getString(R.string.no_groups));
         }
@@ -110,6 +111,11 @@ public class GroupSelectActivity extends BaseActionBarActivity {
         groups = DatabaseService.getInstance().getGroups();
         aa = new ArrayAdapter<MyGroup>(this, android.R.layout.simple_list_item_1, groups);
         listView.setAdapter(aa);
+        if(groups.size() == 0){
+            selectText.setText(getString(R.string.no_groups));
+        }else{
+            selectText.setText(getString(R.string.select_group));
+        }
     }
 
     public void createGroup(){

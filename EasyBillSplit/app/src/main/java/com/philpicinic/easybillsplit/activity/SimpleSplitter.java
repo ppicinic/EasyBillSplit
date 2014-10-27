@@ -1,19 +1,15 @@
 package com.philpicinic.easybillsplit.activity;
 
-import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
-import com.philpicinic.easybillsplit.service.ManagerService;
 import com.philpicinic.easybillsplit.util.NumberChecker;
 
 import java.math.BigDecimal;

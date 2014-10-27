@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 import com.philpicinic.easybillsplit.R;
 import com.philpicinic.easybillsplit.contact.MyGroup;
-import com.philpicinic.easybillsplit.contact.TextPerson;
 import com.philpicinic.easybillsplit.dao.UserGroup;
 import com.philpicinic.easybillsplit.dialogs.GroupNameDialog;
 import com.philpicinic.easybillsplit.service.DatabaseService;
